@@ -43,16 +43,18 @@ public class DirectFloatTest {
 
 		assertEquals("This DirectFloat should have 15 available floats.", directFloat.getSize(), 15);
 		assertEquals("This DirectFloat should have 60 available bytes.", directFloat.getSizeInBytes(), 60);
+
+		directFloat.destroy();
 	}
 
 	@Test
 	public void getAddressTest() {
-		DirectFloat df = new DirectFloat(1);
+		DirectFloat directFloat = new DirectFloat(1);
 
-		final long address = df.getAddress();
+		final long address = directFloat.getAddress();
 
 		assertTrue("Address should never be zero or negative.", address > 0);
 
-		df.destroy();
+		directFloat.destroy();
 	}
 }

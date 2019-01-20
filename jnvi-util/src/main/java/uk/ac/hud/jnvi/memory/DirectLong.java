@@ -27,7 +27,7 @@ public class DirectLong extends DirectMemory {
 	}
 
 	public void set(long index, long value) {
-		UnsafeAccessor.putFloat(getOffsetAddress(index), value);
+		UnsafeAccessor.putLong(getOffsetAddress(index), value);
 	}
 
 	public long get(long index) {
