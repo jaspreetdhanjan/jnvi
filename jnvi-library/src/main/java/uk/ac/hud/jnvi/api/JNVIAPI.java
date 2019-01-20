@@ -7,7 +7,7 @@ package uk.ac.hud.jnvi.api;
  * compiled to generate the C header files. We do this to ensure all prior defined tests work before recompiling
  * the new changes.
  * <p>
- * Any package within uk.ac.hud.uk.ac.hud.jnvi.api.* is subject to this initial pre-compilation step.
+ * Any package within uk.ac.hud.uk.ac.hud.uk.ac.hud.jnvi.api.* is subject to this initial pre-compilation step.
  * <p>
  * It is highly recommended that no developers use this class directly and instead use the
  * VectorTools API provided which encapsulate all processes.

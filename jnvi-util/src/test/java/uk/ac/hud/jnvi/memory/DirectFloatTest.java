@@ -1,18 +1,10 @@
-package jnvi.memory;
+package uk.ac.hud.jnvi.memory;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
-import uk.ac.hud.jnvi.memory.DirectFloat;
-import uk.ac.hud.jnvi.util.SharedLibrary;
 
 import static org.junit.Assert.*;
 
 public class DirectFloatTest {
-	@BeforeClass
-	public static void beforeClass() {
-		SharedLibrary.load(false);
-	}
-
 	@Test
 	public void setGetTest() {
 		DirectFloat directFloat = new DirectFloat(4);
@@ -51,5 +43,16 @@ public class DirectFloatTest {
 
 		assertEquals("This DirectFloat should have 15 available floats.", directFloat.getSize(), 15);
 		assertEquals("This DirectFloat should have 60 available bytes.", directFloat.getSizeInBytes(), 60);
+	}
+
+	@Test
+	public void getAddressTest() {
+		DirectFloat df = new DirectFloat(1);
+
+		final long address = df.getAddress();
+
+		assertTrue("Address should never be zero or negative.", address > 0);
+
+		df.destroy();
 	}
 }

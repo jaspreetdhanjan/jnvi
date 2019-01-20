@@ -7,6 +7,7 @@
 #define JNVI_API_VERSION 1;
 
 unsigned int isInitialised = 0;
+unsigned int isSupported = 1;
 
 /**
     https://software.intel.com/sites/landingpage/IntrinsicsGuide/
@@ -17,14 +18,14 @@ unsigned int isInitialised = 0;
 JNIEXPORT jboolean JNICALL
 Java_uk_ac_hud_jnvi_api_JNVIAPI_nativeInit(JNIEnv* env, jclass clazz) {
     if(isInitialised == 1) {
-        return 1;
+        return isSupported;
     }
 
     printf("\n----------------------------------\nInitialising JNVI API\n----------------------------------\n");
     isInitialised = 1;
 
     // TODO: Check for SIMD support!
-    return 1;
+    return isSupported;
 }
 
 JNIEXPORT jint JNICALL

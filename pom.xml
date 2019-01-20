@@ -7,12 +7,13 @@
     <packaging>pom</packaging>
 
     <name>JNVI Parent</name>
-    <artifactId>jnvi-parent</artifactId>
-    <groupId>uk.ac.hud.jnvi</groupId>
+    <artifactId>uk.ac.hud.jnvi-parent</artifactId>
+    <groupId>uk.ac.hud.uk.ac.hud.jnvi</groupId>
     <version>1.0-SNAPSHOT</version>
 
     <modules>
         <module>jnvi-library</module>
+        <module>jnvi-util</module>
     </modules>
 
     <developers>

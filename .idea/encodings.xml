@@ -3,5 +3,6 @@
   <component name="Encoding" addBOMForNewFiles="with NO BOM">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jnvi-library" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jnvi-util" charset="UTF-8" />
   </component>
 </project>

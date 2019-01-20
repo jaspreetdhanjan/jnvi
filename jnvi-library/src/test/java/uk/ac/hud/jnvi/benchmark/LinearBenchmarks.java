@@ -1,10 +1,10 @@
-package jnvi.benchmark;
+package uk.ac.hud.jnvi.benchmark;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 import uk.ac.hud.jnvi.api.JNVIAPI;
 import uk.ac.hud.jnvi.memory.DirectFloat;
-import uk.ac.hud.jnvi.util.SharedLibrary;
+import uk.ac.hud.jnvi.SharedLibrary;
 
 import java.util.Random;
 

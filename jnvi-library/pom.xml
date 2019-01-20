@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>jnvi-parent</artifactId>
-        <groupId>uk.ac.hud.jnvi</groupId>
+        <artifactId>uk.ac.hud.jnvi-parent</artifactId>
+        <groupId>uk.ac.hud.uk.ac.hud.jnvi</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jnvi-library</artifactId>
+    <artifactId>uk.ac.hud.jnvi-library</artifactId>
     <name>JNVI Library</name>
 
     <build>
@@ -58,21 +58,21 @@
                         </plugin>
             -->
 
-                <!-- Performs integration tests on our project after building -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>2.17</version>
-                    <executions>
-                        <execution>
-                            <id>Java Native Vectorisation Interface (JNVI) Library Integration Tests</id>
-                            <goals>
-                                <goal>integration-test</goal>
-                                <goal>verify</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
+            <!-- Performs integration tests on our project after building -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.17</version>
+                <executions>
+                    <execution>
+                        <id>Java Native Vectorisation Interface (JNVI) Library Integration Tests</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -82,6 +82,11 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>uk.ac.hud.uk.ac.hud.jnvi</groupId>
+            <artifactId>uk.ac.hud.jnvi-util</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

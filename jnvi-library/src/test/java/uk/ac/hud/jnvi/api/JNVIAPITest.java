@@ -1,10 +1,9 @@
-package jnvi.api;
+package uk.ac.hud.jnvi.api;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import uk.ac.hud.jnvi.api.JNVIAPI;
 import uk.ac.hud.jnvi.memory.DirectFloat;
-import uk.ac.hud.jnvi.util.SharedLibrary;
+import uk.ac.hud.jnvi.SharedLibrary;
 
 import java.util.Random;
 
@@ -64,7 +63,7 @@ public class JNVIAPITest {
 		assertEquals(a0 + " * " + a1 + " calculation should be correct.", a0 * a1, resultVector.get(0), 0.0f);
 		assertEquals(b0 + " * " + b1 + " calculation should be correct.", b0 * b1, resultVector.get(1), 0.0f);
 		assertEquals(c0 + " * " + c1 + " calculation should be correct.", c0 * c1, resultVector.get(2), 0.0f);
-		assertEquals(d0 + " * " + d1 + " calculation should be correct.", b0 * d1, resultVector.get(3), 0.0f);
+		assertEquals(d0 + " * " + d1 + " calculation should be correct.", d0 * d1, resultVector.get(3), 0.0f);
 
 		vector0.destroy();
 		vector1.destroy();

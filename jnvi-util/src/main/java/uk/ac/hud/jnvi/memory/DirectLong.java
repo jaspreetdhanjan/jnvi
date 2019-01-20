@@ -1,7 +1,5 @@
 package uk.ac.hud.jnvi.memory;
 
-import uk.ac.hud.jnvi.util.UnsafeAccessor;
-
 /**
  * An 8-byte integer implementation of the {@link DirectMemory} interface.
  *

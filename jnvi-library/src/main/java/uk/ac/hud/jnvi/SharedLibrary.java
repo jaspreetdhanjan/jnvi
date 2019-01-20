@@ -1,4 +1,4 @@
-package uk.ac.hud.jnvi.util;
+package uk.ac.hud.jnvi;
 
 import java.io.File;
 

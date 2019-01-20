@@ -1,7 +1,5 @@
 package uk.ac.hud.jnvi.memory;
 
-import uk.ac.hud.jnvi.util.UnsafeAccessor;
-
 /**
  * A base class that defines any public contracts for a direct memory instance.
  * <p>
