@@ -27,10 +27,10 @@ public class DirectDouble extends DirectMemory {
 	}
 
 	public void set(long index, double value) {
-		UnsafeAccessor.putDouble(getOffsetAddress(index), value);
+		UnsafeMemory.putDouble(getOffsetAddress(index), value);
 	}
 
 	public double get(long index) {
-		return UnsafeAccessor.getDouble(getOffsetAddress(index));
+		return UnsafeMemory.getDouble(getOffsetAddress(index));
 	}
 }

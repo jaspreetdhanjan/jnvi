@@ -27,10 +27,10 @@ public class DirectInt extends DirectMemory {
 	}
 
 	public void set(long index, int value) {
-		UnsafeAccessor.putInt(getOffsetAddress(index), value);
+		UnsafeMemory.putInt(getOffsetAddress(index), value);
 	}
 
 	public int get(long index) {
-		return UnsafeAccessor.getInt(getOffsetAddress(index));
+		return UnsafeMemory.getInt(getOffsetAddress(index));
 	}
 }

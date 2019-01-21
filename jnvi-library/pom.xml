@@ -34,30 +34,6 @@
                 </executions>
             </plugin>
 
-            <!--
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-assembly-plugin</artifactId>
-                            <version>2.3</version>
-                            <configuration>
-                                <descriptors>
-                                    <descriptor>src/main/resources/assembly.xml</descriptor>
-                                </descriptors>
-                                <appendAssemblyId>false</appendAssemblyId>
-                                <finalName>libs</finalName>
-                            </configuration>
-                            <executions>
-                                <execution>
-                                    <id>assembly</id>
-                                    <phase>package</phase>
-                                    <goals>
-                                        <goal>single</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
-            -->
-
             <!-- Performs integration tests on our project after building -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

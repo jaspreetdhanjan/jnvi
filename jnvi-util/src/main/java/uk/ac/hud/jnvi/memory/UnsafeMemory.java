@@ -21,7 +21,7 @@ import java.lang.reflect.Field;
  * @since 1.0.0
  */
 
-public class UnsafeAccessor {
+public class UnsafeMemory {
 	private static final Unsafe UNSAFE;
 
 	static {
@@ -34,7 +34,7 @@ public class UnsafeAccessor {
 		}
 	}
 
-	private UnsafeAccessor() {
+	private UnsafeMemory() {
 	}
 
 	/**

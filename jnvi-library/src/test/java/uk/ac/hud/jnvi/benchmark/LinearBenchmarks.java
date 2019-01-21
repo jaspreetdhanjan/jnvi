@@ -19,7 +19,7 @@ public class LinearBenchmarks {
 	@Test
 	public void benchmarkLinearOffHeapJni() {
 		long totalTime = 0;
-		final int iterations = 1000000;
+		final int iterations = 1_000_000;
 
 		DirectFloat a = new DirectFloat(8);
 		DirectFloat b = new DirectFloat(8);
@@ -45,7 +45,7 @@ public class LinearBenchmarks {
 	@Test
 	public void benchmarkLinearJava() {
 		long totalTime = 0;
-		final int iterations = 1000000;
+		final int iterations = 1_000_000;
 
 		for (int i = 0; i < iterations; i++) {
 			float[] a = {random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat()};

@@ -27,10 +27,10 @@ public class DirectFloat extends DirectMemory {
 	}
 
 	public void set(long index, float value) {
-		UnsafeAccessor.putFloat(getOffsetAddress(index), value);
+		UnsafeMemory.putFloat(getOffsetAddress(index), value);
 	}
 
 	public float get(long index) {
-		return UnsafeAccessor.getFloat(getOffsetAddress(index));
+		return UnsafeMemory.getFloat(getOffsetAddress(index));
 	}
 }

@@ -1,16 +1,16 @@
 package uk.ac.hud.jnvi.api;
 
 /**
- * Lightweight class that defines the main API for the Java Native Vectorisation Interface.
+ * Defines the main API for the Java Native Vectorisation Interface. It gives us access to the plethora of low-level
+ * Intel Single Instruction, Multiple Data (SIMD) intrinsics.
+ * <p>
+ * All off-heap data must be aligned and of the same length.
  * <p>
  * It is essential that this class does not include any references to any non-JDK classes. This class is initially
  * compiled to generate the C header files. We do this to ensure all prior defined tests work before recompiling
  * the new changes.
  * <p>
- * Any package within uk.ac.hud.uk.ac.hud.uk.ac.hud.jnvi.api.* is subject to this initial pre-compilation step.
- * <p>
- * It is highly recommended that no developers use this class directly and instead use the
- * VectorTools API provided which encapsulate all processes.
+ * Any class within the uk.ac.hud.jnvi.api package is subject to this initial pre-compilation step.
  *
  * @author Jaspreet Dhanjan
  * @date 25/12/2018
@@ -42,7 +42,10 @@ public class JNVIAPI {
 	/**
 	 * An internal API operation notifying the native library when the JNVIAPI class is statically initialised.
 	 *
-	 * @return true if the API is supported on this machine's architecture, view {@link #isSupported()}.
+	 * This should only be called once. The result is cached and can be accessed through the {@link #isSupported()}
+	 * method.
+	 *
+	 * @return true if the API is supported on this machine's architecture, view {@link #isSupported()} documentation.
 	 * @since 1.0.0
 	 */
 	private static native boolean nativeInit();
@@ -76,6 +79,4 @@ public class JNVIAPI {
 	 * @since 1.0.0
 	 */
 	public static native void nativeMultiply(long addressA, long addressB, long addressC, long length);
-
-	//public static native float[] multiply(float[] a, float[] b);
 }

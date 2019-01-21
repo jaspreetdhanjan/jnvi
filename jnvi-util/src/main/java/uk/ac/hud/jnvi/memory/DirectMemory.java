@@ -21,10 +21,10 @@ abstract class DirectMemory {
 	 */
 	DirectMemory(long size) {
 		this.sizeInBytes = size * getByteStride();
-		this.address = UnsafeAccessor.allocateMemory(sizeInBytes);
+		this.address = UnsafeMemory.allocateMemory(sizeInBytes);
 
 		// allocateMemory returns uninitialised memory. We need to clear it.
-		UnsafeAccessor.setMemory(address, sizeInBytes, (byte) 0);
+		UnsafeMemory.setMemory(address, sizeInBytes, (byte) 0);
 	}
 
 	protected abstract long getByteStride();
@@ -39,7 +39,7 @@ abstract class DirectMemory {
 	 * @since 1.0.0
 	 */
 	public void destroy() {
-		UnsafeAccessor.freeMemory(address);
+		UnsafeMemory.freeMemory(address);
 	}
 
 	/**

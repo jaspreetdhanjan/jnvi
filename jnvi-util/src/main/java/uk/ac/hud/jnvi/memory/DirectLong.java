@@ -27,10 +27,10 @@ public class DirectLong extends DirectMemory {
 	}
 
 	public void set(long index, long value) {
-		UnsafeAccessor.putLong(getOffsetAddress(index), value);
+		UnsafeMemory.putLong(getOffsetAddress(index), value);
 	}
 
 	public long get(long index) {
-		return UnsafeAccessor.getLong(getOffsetAddress(index));
+		return UnsafeMemory.getLong(getOffsetAddress(index));
 	}
 }
