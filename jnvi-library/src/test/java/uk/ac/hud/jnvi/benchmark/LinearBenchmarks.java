@@ -50,9 +50,10 @@ public class LinearBenchmarks {
 		for (int i = 0; i < iterations; i++) {
 			float[] a = {random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat()};
 			float[] b = {random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat()};
+			float[] c = new float[a.length];
 
 			long time = System.nanoTime();
-			float[] c = multiply(a, b);
+			multiply(a, b, c);
 			time = System.nanoTime() - time;
 			totalTime += time;
 		}
@@ -60,12 +61,10 @@ public class LinearBenchmarks {
 		System.out.print("Average calculation time took " + totalTime / iterations + " nanos");
 	}
 
-	private static float[] multiply(float[] a, float[] b) {
-		float[] c = new float[a.length];
+	private static void multiply(float[] a, float[] b, float[] c) {
 		for (int i = 0; i < c.length; i++) {
 			c[i] = a[i] * b[i];
 		}
-		return c;
 	}
 
 	/*

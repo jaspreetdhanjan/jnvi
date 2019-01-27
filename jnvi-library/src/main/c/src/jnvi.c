@@ -6,7 +6,6 @@
 
 #define JNVI_API_VERSION 1;
 
-unsigned int isInitialised = 0;
 unsigned int isSupported = 1;
 
 /**
@@ -17,12 +16,7 @@ unsigned int isSupported = 1;
 
 JNIEXPORT jboolean JNICALL
 Java_uk_ac_hud_jnvi_api_JNVIAPI_nativeInit(JNIEnv* env, jclass clazz) {
-    if(isInitialised == 1) {
-        return isSupported;
-    }
-
     printf("\n----------------------------------\nInitialising JNVI API\n----------------------------------\n");
-    isInitialised = 1;
 
     // TODO: Check for SIMD support!
     return isSupported;
@@ -98,10 +92,10 @@ JavaCritical_uk_ac_hud_jnvi_api_JNVIAPI_nativeMultiply(jlong a, jlong b, jlong c
 
     __m128 sum = _mm_mul_ps(vector1, vector2);
 
-    cv[3] = sum[0];
-    cv[2] = sum[1];
-    cv[1] = sum[2];
-    cv[0] = sum[3];
+    cv[0] = sum[0];
+    cv[1] = sum[1];
+    cv[2] = sum[2];
+    cv[3] = sum[3];
 }
 
 //JNIEXPORT void JNICALL

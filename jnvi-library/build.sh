@@ -6,9 +6,11 @@ echo "Building Java Native Vectorisation Interface (JNVI) library..."
 
 export JAVA_HOME="jdk1.8.0_60/Home"
 
+OSX_LIB=jnvi-lib.jnilib
+#LINUX_LIB=jnvi-lib.so
+
 API=src/main/java/uk/ac/hud/jnvi/api/*
 LIBDIR=target/
-LIBNAME=jnvilib.jnilib
 NATIVE_SOURCES=src/main/c/src/*
 NATIVE_HEADERS=src/main/c/include
 
@@ -19,5 +21,10 @@ rm -rf ${API}.class
 
 # ----- STEP 2: Compile native library and move to lib. -----
 
-gcc -I"$JAVA_HOME/include" -I"$JAVA_HOME/include/darwin/" -o $LIBNAME -shared $NATIVE_SOURCES
-mv $LIBNAME $LIBDIR
+# macOS
+gcc -I"$JAVA_HOME/include" -I"$JAVA_HOME/include/darwin/" -o $OSX_LIB -shared $NATIVE_SOURCES
+mv $OSX_LIB $LIBDIR
+
+# Linux
+#gcc -I"$JAVA_HOME/include" -I"$JAVA_HOME/include/linux/" -o $LINUX_LIB -shared $NATIVE_SOURCES
+#mv $LINUX_LIB $LIBDIR
