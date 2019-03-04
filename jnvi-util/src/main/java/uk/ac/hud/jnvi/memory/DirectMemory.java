@@ -1,8 +1,6 @@
 package uk.ac.hud.jnvi.memory;
 
 /**
- * A base class that defines any public contracts for a direct memory instance.
- * <p>
  * Memory allocated using this class will be off-heap and inaccessible to the Java Virtual Machine, including garbage
  * collector. It is <b>essential</b> that any instantiations of any inherited classes of this type <b>should</b> be
  * destroyed after it has been used.
@@ -12,14 +10,14 @@ package uk.ac.hud.jnvi.memory;
  * @since 1.0.0
  */
 
-abstract class DirectMemory {
+public abstract class DirectMemory {
 	private final long sizeInBytes;
 	private final long address;
 
 	/**
 	 * The constructor will allocated the memory, with the given size, when the object is created.
 	 */
-	DirectMemory(long size) {
+	public DirectMemory(long size) {
 		this.sizeInBytes = size * getByteStride();
 		this.address = UnsafeMemory.allocateMemory(sizeInBytes);
 

@@ -71,6 +71,7 @@ public class JNVIAPI {
 	/**
 	 * Will multiply the vector data at addressA to the vector data at addressB and place the result at addressC. It is
 	 * critically important that the vector information stored at addressA and addressB are of the same length.
+	 * The result vector must also be of the same length.
 	 * <p>
 	 * It is important that this address is released as it exists within native memory.
 	 * <p>
@@ -78,5 +79,5 @@ public class JNVIAPI {
 	 *
 	 * @since 1.0.0
 	 */
-	public static native void nativeMultiply(long addressA, long addressB, long addressC, long length);
+	public static native void nativeMultiply(long addressA, long addressB, long addressC);
 }

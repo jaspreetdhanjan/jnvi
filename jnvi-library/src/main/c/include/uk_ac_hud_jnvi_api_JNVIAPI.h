@@ -26,10 +26,10 @@ JNIEXPORT jint JNICALL Java_uk_ac_hud_jnvi_api_JNVIAPI_getVersion
 /*
  * Class:     uk_ac_hud_jnvi_api_JNVIAPI
  * Method:    nativeMultiply
- * Signature: (JJJJ)V
+ * Signature: (JJJ)V
  */
 JNIEXPORT void JNICALL Java_uk_ac_hud_jnvi_api_JNVIAPI_nativeMultiply
-  (JNIEnv *, jclass, jlong, jlong, jlong, jlong);
+  (JNIEnv *, jclass, jlong, jlong, jlong);
 
 #ifdef __cplusplus
 }

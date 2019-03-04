@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>uk.ac.hud.jnvi-parent</artifactId>
-        <groupId>uk.ac.hud.uk.ac.hud.jnvi</groupId>
+        <artifactId>jnvi-parent</artifactId>
+        <groupId>uk.ac.hud.jnvi</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>uk.ac.hud.jnvi-util</artifactId>
+    <artifactId>jnvi-util</artifactId>
     <name>JNVI Utilities</name>
 
     <dependencies>

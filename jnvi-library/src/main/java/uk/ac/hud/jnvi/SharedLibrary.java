@@ -4,6 +4,9 @@ import java.io.File;
 
 /**
  * A utility class that allows us to load our JNVI native library into the JVM.
+ * <p>
+ * Setting the System Property jnvi.library.dir to the folder enclosing our JNVI library is enough. This class will
+ * find out what library is suited for this machine.
  *
  * @author Jaspreet Dhanjan
  * @date 25/12/2018
@@ -11,13 +14,19 @@ import java.io.File;
 
 public class SharedLibrary {
 	private enum OSType {
-		macOS, windows, linux, other;
+		macOS(".jnilib"), windows(".dll"), linux(".so"), other(null);
+
+		String extension;
+
+		OSType(String extension) {
+			this.extension = extension;
+		}
 	}
+
+	public static final String LIBRARY_DIRECTORY_PROPERTY = "jnvi.library.dir";
 
 	private static final String LIBRARY_DEFAULT_DIRECTORY = "target/";
 	private static final String LIBRARY_NAME = "jnvi-lib";
-
-	private static final String LIBRARY_DIRECTORY_PROPERTY = "jnvi.library.dir";
 
 	private static final OSType OS = getOS();
 
@@ -27,26 +36,23 @@ public class SharedLibrary {
 	public static void load(boolean debug) {
 		final String parentDirectoryProperty = System.getProperty(LIBRARY_DIRECTORY_PROPERTY, LIBRARY_DEFAULT_DIRECTORY);
 
-//		if (debug) {
-//			System.out.println(System.getProperty("os.name") + " v" + System.getProperty("os.version"));
-//			System.out.println(System.getProperty("java.version") + " " + System.getProperty("os.arch"));
-//			System.out.println(System.getProperty("java.vm.name") + " v" + System.getProperty("java.vm.version") + " by " + System.getProperty("java.vm.vendor"));
-//			System.out.println();
-//		}
+		File parentDirectory = new File(parentDirectoryProperty);
 
-		File parentFile = new File(parentDirectoryProperty);
-
-		if (!parentFile.exists()) {
-			throw new RuntimeException("Folder containing the native library does not exist!");
+		if (!parentDirectory.exists()) {
+			throw new RuntimeException("The folder (" + parentDirectoryProperty + ") containing the native library does not exist!");
 		}
 
-		File libraryFile = new File(parentFile, LIBRARY_NAME + getExtension(OS));
+		File libraryFile = new File(parentDirectory, getLibraryFilename());
 
 		if (!libraryFile.exists()) {
-			throw new RuntimeException("Native library does not exist within the " + parentDirectoryProperty + " folder!");
+			throw new RuntimeException("The native library does not exist within the " + parentDirectoryProperty + " folder!");
 		}
 
-		String libraryPath = libraryFile.getAbsolutePath();
+		load(libraryFile, debug);
+	}
+
+	private static void load(File libraryFile, boolean debug) {
+		final String libraryPath = libraryFile.getAbsolutePath();
 
 		if (debug) {
 			System.out.println("Loading -> " + libraryPath);
@@ -55,16 +61,14 @@ public class SharedLibrary {
 		System.load(libraryPath);
 	}
 
-	private static String getExtension(OSType osType) {
-		if (osType == OSType.macOS) {
-			return ".jnilib";
-		} else if (osType == OSType.windows) {
-			return ".dll";
-		} else if (osType == OSType.linux) {
-			return ".so";
+	private static String getLibraryFilename() {
+		final String ext = OS.extension;
+
+		if (ext == null) {
+			throw new RuntimeException("JNVI Library is not supported on this platform!");
 		}
 
-		throw new RuntimeException("JNVI Library is not supported on this platform!");
+		return LIBRARY_NAME + ext;
 	}
 
 	private static OSType getOS() {

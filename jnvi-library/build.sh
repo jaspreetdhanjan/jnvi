@@ -21,10 +21,8 @@ rm -rf ${API}.class
 
 # ----- STEP 2: Compile native library and move to lib. -----
 
-# macOS
-gcc -I"$JAVA_HOME/include" -I"$JAVA_HOME/include/darwin/" -o $OSX_LIB -shared $NATIVE_SOURCES
-mv $OSX_LIB $LIBDIR
+# The -mavx2 argument will allow us to enable AVX.
 
-# Linux
-#gcc -I"$JAVA_HOME/include" -I"$JAVA_HOME/include/linux/" -o $LINUX_LIB -shared $NATIVE_SOURCES
-#mv $LINUX_LIB $LIBDIR
+# macOS
+gcc -I"$JAVA_HOME/include" -I"$JAVA_HOME/include/darwin/" -mavx2 -o $OSX_LIB -shared $NATIVE_SOURCES
+mv $OSX_LIB $LIBDIR
