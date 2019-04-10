@@ -4,17 +4,13 @@ import java.io.File;
 
 /**
  * A utility class that allows us to load our JNVI native library into the JVM.
- * <p>
- * Setting the System Property jnvi.library.dir to the folder enclosing our JNVI library is enough. This class will
- * find out what library is suited for this machine.
  *
  * @author Jaspreet Dhanjan
- * @date 25/12/2018
  */
 
 public class SharedLibrary {
 	private enum OSType {
-		macOS(".jnilib"), windows(".dll"), linux(".so"), other(null);
+		macOS(".jnilib"), windows(".dll"), linux(".so");
 
 		String extension;
 
@@ -23,7 +19,7 @@ public class SharedLibrary {
 		}
 	}
 
-	public static final String LIBRARY_DIRECTORY_PROPERTY = "jnvi.library.dir";
+	public static final String JNVI_LIBRARY_DIRECTORY_PROPERTY = "jnvi.library.dir";
 
 	private static final String LIBRARY_DEFAULT_DIRECTORY = "target/";
 	private static final String LIBRARY_NAME = "jnvi-lib";
@@ -33,8 +29,17 @@ public class SharedLibrary {
 	private SharedLibrary() {
 	}
 
-	public static void load(boolean debug) {
-		final String parentDirectoryProperty = System.getProperty(LIBRARY_DIRECTORY_PROPERTY, LIBRARY_DEFAULT_DIRECTORY);
+	/**
+	 * Will load the native library from the jnvi.library.dir system property. If this is unset, then the method will
+	 * attempt to load the library from the default target output directory.
+	 * <p>
+	 * Setting the System Property jnvi.library.dir to the folder enclosing our JNVI library is enough. This class will
+	 * find out what library extension is best suited for this machine.
+	 * <p>
+	 * If this machine is unsupported or the native library does not exist, a {@link RuntimeException} will be thrown.
+	 */
+	public static void load() {
+		final String parentDirectoryProperty = System.getProperty(JNVI_LIBRARY_DIRECTORY_PROPERTY, LIBRARY_DEFAULT_DIRECTORY);
 
 		File parentDirectory = new File(parentDirectoryProperty);
 
@@ -48,27 +53,15 @@ public class SharedLibrary {
 			throw new RuntimeException("The native library does not exist within the " + parentDirectoryProperty + " folder!");
 		}
 
-		load(libraryFile, debug);
-	}
-
-	private static void load(File libraryFile, boolean debug) {
-		final String libraryPath = libraryFile.getAbsolutePath();
-
-		if (debug) {
-			System.out.println("Loading -> " + libraryPath);
-		}
-
-		System.load(libraryPath);
+		System.load(libraryFile.getAbsolutePath());
 	}
 
 	private static String getLibraryFilename() {
-		final String ext = OS.extension;
-
-		if (ext == null) {
+		if (OS == null) {
 			throw new RuntimeException("JNVI Library is not supported on this platform!");
 		}
 
-		return LIBRARY_NAME + ext;
+		return LIBRARY_NAME + OS.extension;
 	}
 
 	private static OSType getOS() {
@@ -82,6 +75,6 @@ public class SharedLibrary {
 			return OSType.linux;
 		}
 
-		return OSType.other;
+		return null;
 	}
 }

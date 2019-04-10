@@ -1,7 +1,7 @@
 package uk.ac.hud.jnvi.memory;
 
 /**
- * An 4-byte integer implementation of the {@link DirectMemory} interface.
+ * A 4-byte integer implementation of the {@link DirectMemory} interface.
  *
  * @author Jaspreet Dhanjan
  * @date 27/12/2018
@@ -15,10 +15,16 @@ public class DirectInt extends DirectMemory {
 		super(size);
 	}
 
-	public static void set(DirectInt directLong, int[] values) {
+	public static void set(DirectInt directLong, int... values) {
 		for (int i = 0; i < directLong.getSize(); i++) {
 			directLong.set(i, values[i]);
 		}
+	}
+
+	public static DirectInt allocateDirect(int... values) {
+		DirectInt di = new DirectInt(values.length);
+		DirectInt.set(di, values);
+		return di;
 	}
 
 	@Override
@@ -32,5 +38,20 @@ public class DirectInt extends DirectMemory {
 
 	public int get(long index) {
 		return UnsafeMemory.getInt(getOffsetAddress(index));
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder stringBuilder = new StringBuilder("[");
+
+		final long len = getSize() - 1;
+		for (long i = 0; i <= len; i++) {
+			stringBuilder.append(get(i));
+			if (i != len) {
+				stringBuilder.append(", ");
+			}
+		}
+
+		return stringBuilder.append("]").toString();
 	}
 }

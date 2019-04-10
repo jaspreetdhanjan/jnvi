@@ -11,44 +11,69 @@ package uk.ac.hud.jnvi.api;
  * the new changes.
  * <p>
  * Any class within the uk.ac.hud.jnvi.api package is subject to this initial pre-compilation step.
+ * <p>
+ * Some documentation may have been lifted from: https://software.intel.com/sites/landingpage/IntrinsicsGuide
  *
  * @author Jaspreet Dhanjan
- * @date 25/12/2018
  * @since 1.0.0
  */
 
 public class JNVIAPI {
-	private static final boolean SUPPORTED;
+	private static final int SUPPORT;
+	private static Integer VERSION;
+
+	public static final byte JNVI_DOUBLE_TYPE = 0x1;
+	public static final byte JNVI_FLOAT_TYPE = 0x2;
+	public static final byte JNVI_INT_TYPE = 0x3;
 
 	static {
-		boolean supported = false;
+		int support = 0;
+
 		try {
-			supported = nativeInit();
+			support = nativeInit();
 		} catch (UnsatisfiedLinkError unsatisfiedLinkError) {
 			System.err.println("JNVI library not loaded! Use SharedLibrary.load() to load the shared libraries.");
+			unsatisfiedLinkError.printStackTrace();
 		}
 
-		SUPPORTED = supported;
+		SUPPORT = support;
+		System.out.println("JNVI Library successfully loaded! (With support for: 0b" + Integer.toBinaryString(support) + ")");
 	}
-
-	/**
-	 * Jaspreets-MBP:~ jaspreetdhanjan$ sysctl -a | grep machdep.cpu.features
-	 * machdep.cpu.features: FPU VME DE PSE TSC MSR PAE MCE CX8 APIC SEP MTRR PGE MCA CMOV PAT PSE36 CLFSH DS ACPI MMX FXSR SSE SSE2 SS HTT TM PBE SSE3 PCLMULQDQ DTES64 MONDSCPL VMX EST TM2 SSSE3 FMA CX16 TPR PDCM SSE4.1 SSE4.2 x2APIC MOVBE POPCNT AES PCID XSAVE OSXSAVE SEGLIM64 TSCTMR AVX1.0 RDRAND F16C
-	 */
 
 	private JNVIAPI() {
 	}
 
+	//----------------------
+	// API
+	// ----------------------
+
 	/**
 	 * An internal API operation notifying the native library when the JNVIAPI class is statically initialised.
-	 *
+	 * <p>
 	 * This should only be called once. The result is cached and can be accessed through the {@link #isSupported()}
 	 * method.
+	 * <p>
+	 * This return type refers to a custom bit order that defines the user support for Intel's SIMD hardware. This bit
+	 * order's schema is defined as following:
+	 * <p>
+	 * |--------------------------------------------------------|
+	 * | AVX2 | AVX | SSE42 | SSE41 | SSSE3 | SSE3 | SSE2 | SSE |
+	 * |--------------------------------------------------------|
+	 * |   0  |  0  |   0   |   0   |   0   |   0  |   0  |  0  |
+	 * |--------------------------------------------------------|
 	 *
-	 * @return true if the API is supported on this machine's architecture, view {@link #isSupported()} documentation.
+	 * @return an integer value (big endian) containing the corresponding bits that support the SIMD specification.
 	 * @since 1.0.0
 	 */
-	private static native boolean nativeInit();
+	private static native int nativeInit();
+
+	/**
+	 * Native implementation of {@link #getVersion()}
+	 *
+	 * @return the version of the JNVI API.
+	 * @since 1.0.0
+	 */
+	private static native int getVersion0();
 
 	/**
 	 * Allows the developer to gain insight into the shared library they have installed.
@@ -56,28 +81,75 @@ public class JNVIAPI {
 	 * @return the version of the JNVI API.
 	 * @since 1.0.0
 	 */
-	public static native int getVersion();
+	public static int getVersion() {
+		if (VERSION == null) {
+			VERSION = getVersion0();
+		}
 
-	/**
-	 * This API is specifically built for Intel's: MMX, SSE, SSE2, SSE3, SSSE3 AND SSE4.x architectures.
-	 *
-	 * @return true if the hardware supports Single Instruction, Multiple Data (SIMD) processes. False if otherwise.
-	 * @since 1.0.0
-	 */
-	public static boolean isSupported() {
-		return SUPPORTED;
+		return VERSION;
 	}
 
 	/**
-	 * Will multiply the vector data at addressA to the vector data at addressB and place the result at addressC. It is
-	 * critically important that the vector information stored at addressA and addressB are of the same length.
-	 * The result vector must also be of the same length.
-	 * <p>
-	 * It is important that this address is released as it exists within native memory.
-	 * <p>
-	 * Based off: https://stackoverflow.com/questions/1632367/passing-pointers-between-c-and-java-through-jni
+	 * This API is specifically built for Intel's: SSE, SSE2, SSE3, SSSE3, SSE4.x, AVX and AVX2 architectures.
 	 *
+	 * @return true if the hardware supports on of the aforementioned architectures. False if otherwise.
 	 * @since 1.0.0
 	 */
-	public static native void nativeMultiply(long addressA, long addressB, long addressC);
+	public static boolean isSupported() {
+		return SUPPORT > 0;
+	}
+
+	//----------------------
+	// Operations
+	//----------------------
+
+	/**
+	 * Adds the elements within srcA to the elements within srcB and store the results in dest.
+	 *
+	 * @param type the type of memory we are using. This MUST be the same for all sources and the dest.
+	 *             JNVI_DOUBLE_TYPE, JNVI_FLOAT_TYPE and JNVI_INT_TYPE is supported.
+	 * @param srcA the memory location of value A.
+	 * @param srcB the memory location of value B.
+	 * @param dest the memory location of the calculation result.
+	 * @since 1.0.0
+	 */
+	public static native void add(byte type, long srcA, long srcB, long dest);
+
+	/**
+	 * Subtracts the vector data at srcA to the vector data at srcB and place the result at dest.
+	 *
+	 * @param type the type of memory we are using. This MUST be the same for all sources and the dest.
+	 *             JNVI_DOUBLE_TYPE, JNVI_FLOAT_TYPE and JNVI_INT_TYPE is supported.
+	 * @param srcA the memory location of value A.
+	 * @param srcB the memory location of value B.
+	 * @param dest the memory location of the calculation result.
+	 * @since 1.0.0
+	 */
+	public static native void sub(byte type, long srcA, long srcB, long dest);
+
+	/**
+	 * Multiplies the vector data at srcA to the vector data at srcB and place the result at dest.
+	 * <p>
+	 * It is critically important that the vector information stored at srcA, srcB and dest are of the same length.
+	 *
+	 * @param type the type of memory we are using. This MUST be the same for all sources and the dest.
+	 *             JNVI_DOUBLE_TYPE, JNVI_FLOAT_TYPE and JNVI_INT_TYPE is supported.
+	 * @param srcA the memory location of value A.
+	 * @param srcB the memory location of value B.
+	 * @param dest the memory location of the calculation result.
+	 * @since 1.0.0
+	 */
+	public static native void mul(byte type, long srcA, long srcB, long dest);
+
+	/**
+	 * Divides the vector data at srcA to the vector data at srcB and place the result at dest.
+	 *
+	 * @param type the type of memory we are using. This MUST be the same for all sources and the dest.
+	 *             JNVI_DOUBLE_TYPE, JNVI_FLOAT_TYPE and JNVI_INT_TYPE is supported.
+	 * @param srcA the memory location of value A (numerator).
+	 * @param srcB the memory location of value B (denominator).
+	 * @param dest the memory location of the calculation result.
+	 * @since 1.0.0
+	 */
+	public static native void div(byte type, long srcA, long srcB, long dest);
 }

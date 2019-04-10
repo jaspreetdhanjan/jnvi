@@ -15,10 +15,16 @@ public class DirectDouble extends DirectMemory {
 		super(size);
 	}
 
-	public static void set(DirectDouble directLong, double[] values) {
+	public static void set(DirectDouble directLong, double... values) {
 		for (int i = 0; i < directLong.getSize(); i++) {
 			directLong.set(i, values[i]);
 		}
+	}
+
+	public static DirectDouble allocateDirect(double... values) {
+		DirectDouble dd = new DirectDouble(values.length);
+		DirectDouble.set(dd, values);
+		return dd;
 	}
 
 	@Override
@@ -32,5 +38,20 @@ public class DirectDouble extends DirectMemory {
 
 	public double get(long index) {
 		return UnsafeMemory.getDouble(getOffsetAddress(index));
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder stringBuilder = new StringBuilder("[");
+
+		final long len = getSize() - 1;
+		for (long i = 0; i <= len; i++) {
+			stringBuilder.append(get(i));
+			if (i != len) {
+				stringBuilder.append(", ");
+			}
+		}
+
+		return stringBuilder.append("]").toString();
 	}
 }

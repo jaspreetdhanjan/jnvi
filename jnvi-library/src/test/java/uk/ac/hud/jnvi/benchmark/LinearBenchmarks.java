@@ -2,11 +2,16 @@ package uk.ac.hud.jnvi.benchmark;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import uk.ac.hud.LinearUtils;
 import uk.ac.hud.jnvi.SharedLibrary;
 import uk.ac.hud.jnvi.api.JNVIAPI;
 import uk.ac.hud.jnvi.memory.DirectFloat;
 
 import java.util.Random;
+
+/**
+ * This test case is concerned only with the efficiency of the JNVI API.
+ */
 
 public class LinearBenchmarks {
 	private static final int ITERATIONS = 1_000_000;
@@ -15,8 +20,10 @@ public class LinearBenchmarks {
 
 	@BeforeClass
 	public static void beforeClass() {
-		SharedLibrary.load(false);
+		SharedLibrary.load();
 	}
+
+//	public void compareTest
 
 	@Test
 	public void benchmarkLinearOffHeapJni() {
@@ -27,11 +34,13 @@ public class LinearBenchmarks {
 		DirectFloat c = new DirectFloat(8);
 
 		for (int i = 0; i < ITERATIONS; i++) {
-			DirectFloat.set(a, new float[]{random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat()});
-			DirectFloat.set(b, new float[]{random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat()});
+			DirectFloat.set(a, random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat());
+			DirectFloat.set(b, random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat());
 
 			long time = System.nanoTime();
-			JNVIAPI.nativeMultiply(a.getAddress(), b.getAddress(), c.getAddress());
+			{
+				JNVIAPI.add(JNVIAPI.JNVI_FLOAT_TYPE, a.getAddress(), b.getAddress(), c.getAddress());
+			}
 			time = System.nanoTime() - time;
 			totalTime += time;
 		}
@@ -53,17 +62,13 @@ public class LinearBenchmarks {
 			float[] c = new float[a.length];
 
 			long time = System.nanoTime();
-			multiply(a, b, c);
+			{
+				LinearUtils.mul(a, b, c);
+			}
 			time = System.nanoTime() - time;
 			totalTime += time;
 		}
 
 		System.out.print("Average calculation time took " + totalTime / ITERATIONS + " nanos");
-	}
-
-	private static void multiply(float[] a, float[] b, float[] c) {
-		for (int i = 0; i < c.length; i++) {
-			c[i] = a[i] * b[i];
-		}
 	}
 }

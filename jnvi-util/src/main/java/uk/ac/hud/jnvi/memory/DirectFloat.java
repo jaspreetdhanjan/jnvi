@@ -15,10 +15,16 @@ public class DirectFloat extends DirectMemory {
 		super(size);
 	}
 
-	public static void set(DirectFloat directFloat, float[] values) {
+	public static void set(DirectFloat directFloat, float... values) {
 		for (int i = 0; i < directFloat.getSize(); i++) {
 			directFloat.set(i, values[i]);
 		}
+	}
+
+	public static DirectFloat allocateDirect(float... values) {
+		DirectFloat df = new DirectFloat(values.length);
+		DirectFloat.set(df, values);
+		return df;
 	}
 
 	@Override
@@ -32,5 +38,20 @@ public class DirectFloat extends DirectMemory {
 
 	public float get(long index) {
 		return UnsafeMemory.getFloat(getOffsetAddress(index));
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder stringBuilder = new StringBuilder("[");
+
+		final long len = getSize() - 1;
+		for (long i = 0; i <= len; i++) {
+			stringBuilder.append(get(i));
+			if (i != len) {
+				stringBuilder.append(", ");
+			}
+		}
+
+		return stringBuilder.append("]").toString();
 	}
 }

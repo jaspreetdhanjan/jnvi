@@ -4,6 +4,9 @@ package uk.ac.hud.jnvi.memory;
  * Memory allocated using this class will be off-heap and inaccessible to the Java Virtual Machine, including garbage
  * collector. It is <b>essential</b> that any instantiations of any inherited classes of this type <b>should</b> be
  * destroyed after it has been used.
+ * <p>
+ * This API has been specifically made for the JNVI Library. It allows us to retrieve a pointer to the native memory. It
+ * is based off: https://stackoverflow.com/questions/1632367/passing-pointers-between-c-and-java-through-jni
  *
  * @author Jaspreet Dhanjan
  * @date 27/12/2018
@@ -25,8 +28,19 @@ public abstract class DirectMemory {
 		UnsafeMemory.setMemory(address, sizeInBytes, (byte) 0);
 	}
 
+	/**
+	 * @return the size of each element in bytes.
+	 * @since 1.0.0
+	 */
 	protected abstract long getByteStride();
 
+	/**
+	 * Calculates the address of any element within this array.
+	 *
+	 * @param index the index of the element.
+	 * @return the address corresponding to the index of this array within memory.
+	 * @since 1.0.0
+	 */
 	protected long getOffsetAddress(long index) {
 		return getAddress() + (index * getByteStride());
 	}
@@ -41,7 +55,7 @@ public abstract class DirectMemory {
 	}
 
 	/**
-	 * @return the size of this type in it's primitive type.
+	 * @return the size of this array in it's primitive denomination.
 	 * @since 1.0.0
 	 */
 	public long getSize() {
@@ -49,7 +63,7 @@ public abstract class DirectMemory {
 	}
 
 	/**
-	 * @return the size of this type in bytes.
+	 * @return the size of this array in bytes.
 	 * @since 1.0.0
 	 */
 	public long getSizeInBytes() {

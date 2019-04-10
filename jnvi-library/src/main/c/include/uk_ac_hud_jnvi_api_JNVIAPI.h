@@ -7,29 +7,59 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#undef uk_ac_hud_jnvi_api_JNVIAPI_JNVI_DOUBLE_TYPE
+#define uk_ac_hud_jnvi_api_JNVIAPI_JNVI_DOUBLE_TYPE 1L
+#undef uk_ac_hud_jnvi_api_JNVIAPI_JNVI_FLOAT_TYPE
+#define uk_ac_hud_jnvi_api_JNVIAPI_JNVI_FLOAT_TYPE 2L
+#undef uk_ac_hud_jnvi_api_JNVIAPI_JNVI_INT_TYPE
+#define uk_ac_hud_jnvi_api_JNVIAPI_JNVI_INT_TYPE 3L
 /*
  * Class:     uk_ac_hud_jnvi_api_JNVIAPI
  * Method:    nativeInit
- * Signature: ()Z
- */
-JNIEXPORT jboolean JNICALL Java_uk_ac_hud_jnvi_api_JNVIAPI_nativeInit
-  (JNIEnv *, jclass);
-
-/*
- * Class:     uk_ac_hud_jnvi_api_JNVIAPI
- * Method:    getVersion
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_uk_ac_hud_jnvi_api_JNVIAPI_getVersion
+JNIEXPORT jint JNICALL Java_uk_ac_hud_jnvi_api_JNVIAPI_nativeInit
   (JNIEnv *, jclass);
 
 /*
  * Class:     uk_ac_hud_jnvi_api_JNVIAPI
- * Method:    nativeMultiply
- * Signature: (JJJ)V
+ * Method:    getVersion0
+ * Signature: ()I
  */
-JNIEXPORT void JNICALL Java_uk_ac_hud_jnvi_api_JNVIAPI_nativeMultiply
-  (JNIEnv *, jclass, jlong, jlong, jlong);
+JNIEXPORT jint JNICALL Java_uk_ac_hud_jnvi_api_JNVIAPI_getVersion0
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     uk_ac_hud_jnvi_api_JNVIAPI
+ * Method:    add
+ * Signature: (BJJJ)V
+ */
+JNIEXPORT void JNICALL Java_uk_ac_hud_jnvi_api_JNVIAPI_add
+  (JNIEnv *, jclass, jbyte, jlong, jlong, jlong);
+
+/*
+ * Class:     uk_ac_hud_jnvi_api_JNVIAPI
+ * Method:    sub
+ * Signature: (BJJJ)V
+ */
+JNIEXPORT void JNICALL Java_uk_ac_hud_jnvi_api_JNVIAPI_sub
+  (JNIEnv *, jclass, jbyte, jlong, jlong, jlong);
+
+/*
+ * Class:     uk_ac_hud_jnvi_api_JNVIAPI
+ * Method:    mul
+ * Signature: (BJJJ)V
+ */
+JNIEXPORT void JNICALL Java_uk_ac_hud_jnvi_api_JNVIAPI_mul
+  (JNIEnv *, jclass, jbyte, jlong, jlong, jlong);
+
+/*
+ * Class:     uk_ac_hud_jnvi_api_JNVIAPI
+ * Method:    div
+ * Signature: (BJJJ)V
+ */
+JNIEXPORT void JNICALL Java_uk_ac_hud_jnvi_api_JNVIAPI_div
+  (JNIEnv *, jclass, jbyte, jlong, jlong, jlong);
 
 #ifdef __cplusplus
 }
