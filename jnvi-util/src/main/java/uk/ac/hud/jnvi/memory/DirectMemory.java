@@ -21,6 +21,10 @@ public abstract class DirectMemory {
 	 * The constructor will allocated the memory, with the given size, when the object is created.
 	 */
 	public DirectMemory(long size) {
+		if (size <= 0) {
+			throw new IllegalArgumentException("Size must be a positive non-zero integer!");
+		}
+
 		this.sizeInBytes = size * getByteStride();
 		this.address = UnsafeMemory.allocateMemory(sizeInBytes);
 

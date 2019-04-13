@@ -5,6 +5,13 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class DirectFloatTest {
+	@Test(expected = IllegalArgumentException.class)
+	public void testBadArgs() {
+		DirectFloat directFloat = new DirectFloat(-1);
+
+		assertNull("Off-heap memory cannot be allocated because a size of -1 is invalid.", directFloat);
+	}
+
 	@Test
 	public void setGetTest() {
 		DirectFloat directFloat = new DirectFloat(4);

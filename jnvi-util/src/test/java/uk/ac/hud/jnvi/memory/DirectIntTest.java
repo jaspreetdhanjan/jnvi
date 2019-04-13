@@ -2,10 +2,16 @@ package uk.ac.hud.jnvi.memory;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class DirectIntTest {
+	@Test(expected = IllegalArgumentException.class)
+	public void testBadArgs() {
+		DirectInt directInt = new DirectInt(-1);
+
+		assertNull("Off-heap memory cannot be allocated because a size of -1 is invalid.", directInt);
+	}
+
 	@Test
 	public void setGetTest() {
 		DirectInt directInt = new DirectInt(4);

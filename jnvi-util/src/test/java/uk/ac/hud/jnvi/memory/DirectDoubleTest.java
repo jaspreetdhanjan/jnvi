@@ -2,10 +2,16 @@ package uk.ac.hud.jnvi.memory;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class DirectDoubleTest {
+	@Test(expected = IllegalArgumentException.class)
+	public void testBadArgs() {
+		DirectDouble directDouble = new DirectDouble(-1);
+
+		assertNull("Off-heap memory cannot be allocated because a size of -1 is invalid.", directDouble);
+	}
+
 	@Test
 	public void setGetTest() {
 		DirectDouble directDouble = new DirectDouble(4);
@@ -57,5 +63,7 @@ public class DirectDoubleTest {
 		assertTrue("Address should never be zero or negative.", address > 0);
 
 		directDouble.destroy();
+
+		System.out.println(directDouble);
 	}
 }

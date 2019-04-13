@@ -18,13 +18,13 @@ package uk.ac.hud.jnvi.api;
  * @since 1.0.0
  */
 
-public class JNVIAPI {
+public final class JNVIAPI {
 	private static final int SUPPORT;
-	private static Integer VERSION;
+	private static final int VERSION;
 
-	public static final byte JNVI_DOUBLE_TYPE = 0x1;
-	public static final byte JNVI_FLOAT_TYPE = 0x2;
-	public static final byte JNVI_INT_TYPE = 0x3;
+	public static final byte TYPE_DOUBLE = 0x1;
+	public static final byte TYPE_FLOAT = 0x2;
+	public static final byte TYPE_INT = 0x3;
 
 	static {
 		int support = 0;
@@ -37,10 +37,13 @@ public class JNVIAPI {
 		}
 
 		SUPPORT = support;
+		VERSION = getVersion0();
+
 		System.out.println("JNVI Library successfully loaded! (With support for: 0b" + Integer.toBinaryString(support) + ")");
 	}
 
 	private JNVIAPI() {
+		throw new RuntimeException("JNVIAPI should not be instantiated!");
 	}
 
 	//----------------------
@@ -82,10 +85,6 @@ public class JNVIAPI {
 	 * @since 1.0.0
 	 */
 	public static int getVersion() {
-		if (VERSION == null) {
-			VERSION = getVersion0();
-		}
-
 		return VERSION;
 	}
 
@@ -104,28 +103,30 @@ public class JNVIAPI {
 	//----------------------
 
 	/**
-	 * Adds the elements within srcA to the elements within srcB and store the results in dest.
+	 * Adds the vector data at srcA to the elements within srcB and store the results in dest.
 	 *
 	 * @param type the type of memory we are using. This MUST be the same for all sources and the dest.
-	 *             JNVI_DOUBLE_TYPE, JNVI_FLOAT_TYPE and JNVI_INT_TYPE is supported.
+	 *             TYPE_DOUBLE, TYPE_FLOAT and TYPE_INT is supported.
 	 * @param srcA the memory location of value A.
 	 * @param srcB the memory location of value B.
 	 * @param dest the memory location of the calculation result.
+	 * @param len the size of the data set. Size of srcA, srcB and dest MUST be of this length.
 	 * @since 1.0.0
 	 */
-	public static native void add(byte type, long srcA, long srcB, long dest);
+	public static native void add(byte type, long srcA, long srcB, long dest, int len);
 
 	/**
-	 * Subtracts the vector data at srcA to the vector data at srcB and place the result at dest.
+	 * Subtracts the vector data at srcA from the vector data at srcB and place the result at dest.
 	 *
 	 * @param type the type of memory we are using. This MUST be the same for all sources and the dest.
-	 *             JNVI_DOUBLE_TYPE, JNVI_FLOAT_TYPE and JNVI_INT_TYPE is supported.
+	 *             TYPE_DOUBLE, TYPE_FLOAT and TYPE_INT is supported.
 	 * @param srcA the memory location of value A.
 	 * @param srcB the memory location of value B.
 	 * @param dest the memory location of the calculation result.
+	 * @param len the size of the data set. Size of srcA, srcB and dest MUST be of this length.
 	 * @since 1.0.0
 	 */
-	public static native void sub(byte type, long srcA, long srcB, long dest);
+	public static native void sub(byte type, long srcA, long srcB, long dest, int len);
 
 	/**
 	 * Multiplies the vector data at srcA to the vector data at srcB and place the result at dest.
@@ -133,23 +134,25 @@ public class JNVIAPI {
 	 * It is critically important that the vector information stored at srcA, srcB and dest are of the same length.
 	 *
 	 * @param type the type of memory we are using. This MUST be the same for all sources and the dest.
-	 *             JNVI_DOUBLE_TYPE, JNVI_FLOAT_TYPE and JNVI_INT_TYPE is supported.
+	 *             TYPE_DOUBLE, TYPE_FLOAT and TYPE_INT is supported.
 	 * @param srcA the memory location of value A.
 	 * @param srcB the memory location of value B.
 	 * @param dest the memory location of the calculation result.
+	 * @param len the size of the data set. Size of srcA, srcB and dest MUST be of this length.
 	 * @since 1.0.0
 	 */
-	public static native void mul(byte type, long srcA, long srcB, long dest);
+	public static native void mul(byte type, long srcA, long srcB, long dest, int len);
 
 	/**
-	 * Divides the vector data at srcA to the vector data at srcB and place the result at dest.
+	 * Divides the vector data at srcA by the vector data at srcB and place the result at dest.
 	 *
 	 * @param type the type of memory we are using. This MUST be the same for all sources and the dest.
-	 *             JNVI_DOUBLE_TYPE, JNVI_FLOAT_TYPE and JNVI_INT_TYPE is supported.
+	 *             TYPE_DOUBLE, TYPE_FLOAT and TYPE_INT is supported.
 	 * @param srcA the memory location of value A (numerator).
 	 * @param srcB the memory location of value B (denominator).
 	 * @param dest the memory location of the calculation result.
+	 * @param len the size of the data set. Size of srcA, srcB and dest MUST be of this length.
 	 * @since 1.0.0
 	 */
-	public static native void div(byte type, long srcA, long srcB, long dest);
+	public static native void div(byte type, long srcA, long srcB, long dest, int len);
 }

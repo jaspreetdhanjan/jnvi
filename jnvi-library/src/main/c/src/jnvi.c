@@ -39,40 +39,57 @@ unsigned int jnvi_is_supported() {
     return supported;
 }
 
-unsigned int jnvi_get_largest_stride(int sizeOfVal) {
+/*
+unsigned int jnvi_get_block(unsigned int sizeOfVal) {
     const unsigned int supported = jnvi_is_supported();
+    if (!supported) return 0;
 
-    for (unsigned int i = 7; i > 0; i--) {
-        unsigned int pos = 1 << i;
-        if ((supported & pos) == 1) {
-            if (i == 7) return 256 / sizeOfVal;
-            if (i == 6) return 256 / sizeOfVal;
-            if (i == 5) return 256 / sizeOfVal;
-            if (i == 4) return 256 / sizeOfVal;
-            if (i == 3) return 256 / sizeOfVal;
-            if (i == 2) return 256 / sizeOfVal;
-            if (i == 1) return 128 / sizeOfVal;
-            if (i == 0) return 128 / sizeOfVal;
-        }
+    int i = 1;
+    while (supported >>= 1) {
+        i <<= 1;
     }
-    return 4;
+
+    if (i == 128) return 256 / sizeOfVal;
+    if (i == 64) return 256 / sizeOfVal;
+    if (i == 32) return 256 / sizeOfVal;
+    if (i == 16) return 256 / sizeOfVal;
+    if (i == 8) return 256 / sizeOfVal;
+    if (i == 4) return 256 / sizeOfVal;
+    if (i == 2) return 128 / sizeOfVal;
+    if (i == 1) return 128 / sizeOfVal;
+
+    return ret;
+}*/
+
+void jnvi_add_f(const fvec *src1, const fvec *src2, fvec *dest, const int n) {
+//    int block = 256 / sizeof(fvec);
+
+//    printf("The block size is %d", block);
+    int block = 4;
+
+    __m128 vec_1, vec_2, result;
+    for (int k = 0; k < n; k += block) {
+        vec_1 = _mm_load_ps(src1 + k);
+        vec_2 = _mm_load_ps(src2 + k);
+        result = _mm_add_ps(vec_1, vec_2);
+
+        _mm_store_ps(dest + k, result);
+    }
+
+//    __m256 vec_1 = _mm256_load_ps(src1);
+//    __m256 vec_2 = _mm256_load_ps(src2);
+//    __m256 res = _mm256_add_ps(vec_1, vec_2);
+//
+//    _mm256_store_ps(dest, res);
 }
 
-void jnvi_add_f(const fvec *src1, const fvec *src2, fvec *dest) {
-    __m256 vec_1 = _mm256_load_ps(src1);
-    __m256 vec_2 = _mm256_load_ps(src2);
-    __m256 res = _mm256_add_ps(vec_1, vec_2);
-
-    _mm256_store_ps(dest, res);
+void jnvi_add_d(const dvec *src1, const dvec *src2, dvec *dest, const int n) {
 }
 
-void jnvi_add_d(const dvec *src1, const dvec *src2, dvec *dest) {
+void jnvi_add_i(const ivec *src1, const ivec *src2, ivec *dest, const int n) {
 }
 
-void jnvi_add_i(const ivec *src1, const ivec *src2, ivec *dest) {
-}
-
-void jnvi_sub_f(const fvec *src1, const fvec *src2, fvec *dest) {
+void jnvi_sub_f(const fvec *src1, const fvec *src2, fvec *dest, const int n) {
     __m256 vec_1 = _mm256_load_ps(src1);
     __m256 vec_2 = _mm256_load_ps(src2);
     __m256 res = _mm256_sub_ps(vec_1, vec_2);
@@ -80,57 +97,32 @@ void jnvi_sub_f(const fvec *src1, const fvec *src2, fvec *dest) {
     _mm256_store_ps(dest, res);
 }
 
-void jnvi_sub_d(const dvec *src1, const dvec *src2, dvec *dest) {
+void jnvi_sub_d(const dvec *src1, const dvec *src2, dvec *dest, const int n) {
 }
 
-void jnvi_sub_i(const ivec *src1, const ivec *src2, ivec *dest) {
+void jnvi_sub_i(const ivec *src1, const ivec *src2, ivec *dest, const int n) {
 }
 
-void jnvi_mul_f(const fvec *src1, const fvec *src2, fvec *dest) {
-    __m256 vec_1 = _mm256_load_ps(src1);
-    __m256 vec_2 = _mm256_load_ps(src2);
-    __m256 res = _mm256_mul_ps(vec_2, vec_1);
+void jnvi_mul_f(const fvec *src1, const fvec *src2, fvec *dest, const int n) {
+    int block = 8;
 
-    _mm256_store_ps(dest, res);
+    __m256 vec_1, vec_2, result;
+    for (int k = 0; k < n; k += block) {
+        vec_1 = _mm256_load_ps(src1 + k);
+        vec_2 = _mm256_load_ps(src2 + k);
+        result = _mm256_mul_ps(vec_1, vec_2);
 
-
-    // TODO: Check for each vector extension and pick most suitable op.
-
-//    __m128 vector1 = _mm_load_ps(a);
-//    __m128 vector2 = _mm_load_ps(b);
-//
-//    __m128 result = vector1 * vector2;
-//
-//    _mm_store_ps(c, result);
-
-
-
-//    printf("%f %f %f %f\n", a[0], a[1], a[2], a[3]);
-//    printf("%f %f %f %f\n", b[0], b[1], b[2], b[3]);
-//    printf("%f %f %f %f\n", c[0], c[1], c[2], c[3]);
-
-
-      // This is wrong.
-      // In our examples we are only using DirectFloats of length 8, which match this reg size.
-      // we need to make a for loop, that iterates through the pointer data and assembles the register data.
-      // Get the best register to do this.
-
-//      __m256 evens = _mm256_set_ps(2.0, 4.0, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0);
-//      __m256 odds = _mm256_set_ps(1.0, 3.0, 5.0, 7.0, 9.0, 11.0, 13.0, 15.0);
-//
-//      __m256 result = _mm256_sub_ps(evens, odds);
-//
-//      fvec* f = (fvec*)&result;
-//      printf("%f %f %f %f %f %f %f %f\n", f[0], f[1], f[2], f[3], f[4], f[5], f[6], f[7]);
+        _mm256_store_ps(dest + k, result);
+    }
 }
 
-void jnvi_mul_d(const dvec *src1, const dvec *src2, dvec *dest) {
+void jnvi_mul_d(const dvec *src1, const dvec *src2, dvec *dest, const int n) {
 }
 
-void jnvi_mul_i(const ivec *src1, const ivec *src2, ivec *dest) {
+void jnvi_mul_i(const ivec *src1, const ivec *src2, ivec *dest, const int n) {
 }
 
-void jnvi_div_f(const fvec *src1, const fvec *src2, fvec *dest) {
+void jnvi_div_f(const fvec *src1, const fvec *src2, fvec *dest, const int n) {
     __m256 vec_1 = _mm256_load_ps(src1);
     __m256 vec_2 = _mm256_load_ps(src2);
     __m256 res = _mm256_div_ps(vec_1, vec_2);
@@ -138,8 +130,8 @@ void jnvi_div_f(const fvec *src1, const fvec *src2, fvec *dest) {
     _mm256_store_ps(dest, res);
 }
 
-void jnvi_div_d(const dvec *src1, const dvec *src2, dvec *dest) {
+void jnvi_div_d(const dvec *src1, const dvec *src2, dvec *dest, const int n) {
 }
 
-void jnvi_div_i(const ivec *src1, const ivec *src2, ivec *dest) {
+void jnvi_div_i(const ivec *src1, const ivec *src2, ivec *dest, const int n) {
 }

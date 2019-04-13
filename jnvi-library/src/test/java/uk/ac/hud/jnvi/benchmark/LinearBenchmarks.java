@@ -23,23 +23,30 @@ public class LinearBenchmarks {
 		SharedLibrary.load();
 	}
 
-//	public void compareTest
+	private float[] getRandomVectorData(int vectorLength) {
+		float[] arr = new float[vectorLength];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = random.nextFloat() * random.nextInt();
+		}
+		return arr;
+	}
 
 	@Test
-	public void benchmarkLinearOffHeapJni() {
+	public void benchmarkMultiplyJNVI() {
+		final int vectorLength = 128;
 		long totalTime = 0;
 
-		DirectFloat a = new DirectFloat(8);
-		DirectFloat b = new DirectFloat(8);
-		DirectFloat c = new DirectFloat(8);
+		DirectFloat a = new DirectFloat(vectorLength);
+		DirectFloat b = new DirectFloat(vectorLength);
+		DirectFloat c = new DirectFloat(vectorLength);
 
 		for (int i = 0; i < ITERATIONS; i++) {
-			DirectFloat.set(a, random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat());
-			DirectFloat.set(b, random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat());
+			DirectFloat.set(a, getRandomVectorData(vectorLength));
+			DirectFloat.set(b, getRandomVectorData(vectorLength));
 
 			long time = System.nanoTime();
 			{
-				JNVIAPI.add(JNVIAPI.JNVI_FLOAT_TYPE, a.getAddress(), b.getAddress(), c.getAddress());
+				JNVIAPI.add(JNVIAPI.TYPE_FLOAT, a.getAddress(), b.getAddress(), c.getAddress(), 8);
 			}
 			time = System.nanoTime() - time;
 			totalTime += time;
@@ -49,17 +56,18 @@ public class LinearBenchmarks {
 		b.destroy();
 		c.destroy();
 
-		System.out.print("Average calculation time took " + totalTime / ITERATIONS + " nanos");
+		System.out.println("Average calculation time took " + totalTime / ITERATIONS + " nanos");
 	}
 
 	@Test
-	public void benchmarkLinearJava() {
+	public void benchmarkMultiplyLinear() {
+		final int vectorLength = 128;
 		long totalTime = 0;
 
 		for (int i = 0; i < ITERATIONS; i++) {
-			float[] a = {random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat()};
-			float[] b = {random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat()};
-			float[] c = new float[a.length];
+			float[] a = getRandomVectorData(vectorLength);
+			float[] b = getRandomVectorData(vectorLength);
+			float[] c = new float[vectorLength];
 
 			long time = System.nanoTime();
 			{
@@ -69,6 +77,6 @@ public class LinearBenchmarks {
 			totalTime += time;
 		}
 
-		System.out.print("Average calculation time took " + totalTime / ITERATIONS + " nanos");
+		System.out.println("Average calculation time took " + totalTime / ITERATIONS + " nanos");
 	}
 }
