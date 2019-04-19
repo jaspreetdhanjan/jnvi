@@ -1,82 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <artifactId>jnvi-parent</artifactId>
-        <groupId>uk.ac.hud.jnvi</groupId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<artifactId>jnvi-parent</artifactId>
+		<groupId>uk.ac.hud.jnvi</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
 
-    <artifactId>jnvi-library</artifactId>
-    <name>JNVI Library</name>
-    <description>The JNVI Library bundle provides the native API allowing the developer to take advantage of Intel's
-        SIMD (Single Instruction, Multiple Data) architecture.
-    </description>
+	<artifactId>jnvi-library</artifactId>
+	<name>JNVI Library</name>
+	<description>The JNVI Library module provides the native API allowing the developer to take advantage of Intel's
+		SIMD (Single Instruction, Multiple Data) architecture.
+	</description>
 
-    <build>
-        <plugins>
-            <!-- Build our native library -->
-            <plugin>
-                <artifactId>exec-maven-plugin</artifactId>
-                <groupId>org.codehaus.mojo</groupId>
-                <version>1.6.0</version>
-                <executions>
-                    <execution>
-                        <id>Java Native Vectorisation Interface (JNVI) Library Build Process</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>${basedir}/build.sh</executable>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+	<build>
+		<plugins>
+			<plugin>
+				<!-- Runs our makefile -->
+				<artifactId>exec-maven-plugin</artifactId>
+				<groupId>org.codehaus.mojo</groupId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<id>darwin64</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>make</executable>
+							<arguments>
+								<argument>TARGET=darwin64</argument>
+							</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 
-            <!-- Performs integration tests on our project after building -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.17</version>
-                <executions>
-                    <execution>
-                        <id>Java Native Vectorisation Interface (JNVI) Library Integration Tests</id>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+			<!-- Performs integration tests on our project after building -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.17</version>
+				<executions>
+					<execution>
+						<id>Java Native Vectorisation Interface (JNVI) Library Integration Tests</id>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-            <!-- Generates our JavaDoc (mvn javadoc:javadoc) -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.0</version>
-                <configuration>
-                    <source>1.8</source>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+			<!-- Generates our JavaDoc (mvn javadoc:javadoc) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<source>1.8</source>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>uk.ac.hud.jnvi</groupId>
-            <artifactId>jnvi-util</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>uk.ac.hud.jnvi</groupId>
+			<artifactId>jnvi-util</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>

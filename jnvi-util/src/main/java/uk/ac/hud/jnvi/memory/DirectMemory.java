@@ -1,7 +1,7 @@
 package uk.ac.hud.jnvi.memory;
 
 /**
- * Memory allocated using this class will be off-heap and inaccessible to the Java Virtual Machine, including garbage
+ * Memory allocated using this class will be off-heap and inaccessible to the Java Virtual Machine, including the garbage
  * collector. It is <b>essential</b> that any instantiations of any inherited classes of this type <b>should</b> be
  * destroyed after it has been used.
  * <p>

@@ -18,7 +18,7 @@ public class DoubleCorrectnessTest implements CorrectnessTest {
 	}
 
 	private int getVectorSize() {
-		return 8;
+		return 4;
 	}
 
 	@Override

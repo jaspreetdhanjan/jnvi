@@ -26,20 +26,35 @@ unsigned int jnvi_is_supported();
 
 // Operations
 
-void jnvi_add_f(const fvec*, const fvec*, fvec*, const int);
 void jnvi_add_d(const dvec*, const dvec*, dvec*, const int);
+void jnvi_add_f(const fvec*, const fvec*, fvec*, const int);
 void jnvi_add_i(const ivec*, const ivec*, ivec*, const int);
 
-void jnvi_sub_f(const fvec*, const fvec*, fvec*, const int);
 void jnvi_sub_d(const dvec*, const dvec*, dvec*, const int);
+void jnvi_sub_f(const fvec*, const fvec*, fvec*, const int);
 void jnvi_sub_i(const ivec*, const ivec*, ivec*, const int);
 
-void jnvi_mul_f(const fvec*, const fvec*, fvec*, const int);
 void jnvi_mul_d(const dvec*, const dvec*, dvec*, const int);
+void jnvi_mul_f(const fvec*, const fvec*, fvec*, const int);
 void jnvi_mul_i(const ivec*, const ivec*, ivec*, const int);
 
-void jnvi_div_f(const fvec*, const fvec*, fvec*, const int);
 void jnvi_div_d(const dvec*, const dvec*, dvec*, const int);
+void jnvi_div_f(const fvec*, const fvec*, fvec*, const int);
 void jnvi_div_i(const ivec*, const ivec*, ivec*, const int);
+
+void jnvi_sqrt_d(const dvec*, dvec*, const int);
+void jnvi_sqrt_f(const fvec*, fvec*, const int);
+
+void jnvi_rsqrt_f(const fvec*, fvec*, const int);
+
+void jnvi_sin_f(const fvec*, fvec*, const int);
+
+void jnvi_cos_f(const fvec*, fvec*, const int);
+
+//void jnvi_sincos_f(const fvec*, fvec*, const int);
+
+void jnvi_exp_f(const fvec*, fvec*, const int);
+
+void jnvi_log_f(const fvec*, fvec*, const int);
 
 #endif

@@ -12,13 +12,9 @@
 
     <artifactId>jnvi-util</artifactId>
     <name>JNVI Utilities</name>
+	<description>The JNVI Utility module provides an API that allows the developer to allocate and deallocate memory
+		outside of the JVM heap.
+	</description>
 
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+
 </project>

@@ -61,6 +61,54 @@ JNIEXPORT void JNICALL Java_uk_ac_hud_jnvi_api_JNVIAPI_mul
 JNIEXPORT void JNICALL Java_uk_ac_hud_jnvi_api_JNVIAPI_div
   (JNIEnv *, jclass, jbyte, jlong, jlong, jlong, jint);
 
+/*
+ * Class:     uk_ac_hud_jnvi_api_JNVIAPI
+ * Method:    sqrt
+ * Signature: (BJJI)V
+ */
+JNIEXPORT void JNICALL Java_uk_ac_hud_jnvi_api_JNVIAPI_sqrt
+  (JNIEnv *, jclass, jbyte, jlong, jlong, jint);
+
+/*
+ * Class:     uk_ac_hud_jnvi_api_JNVIAPI
+ * Method:    rsqrt
+ * Signature: (JJI)V
+ */
+JNIEXPORT void JNICALL Java_uk_ac_hud_jnvi_api_JNVIAPI_rsqrt
+  (JNIEnv *, jclass, jlong, jlong, jint);
+
+/*
+ * Class:     uk_ac_hud_jnvi_api_JNVIAPI
+ * Method:    exp
+ * Signature: (JJI)V
+ */
+JNIEXPORT void JNICALL Java_uk_ac_hud_jnvi_api_JNVIAPI_exp
+  (JNIEnv *, jclass, jlong, jlong, jint);
+
+/*
+ * Class:     uk_ac_hud_jnvi_api_JNVIAPI
+ * Method:    sin
+ * Signature: (JJI)V
+ */
+JNIEXPORT void JNICALL Java_uk_ac_hud_jnvi_api_JNVIAPI_sin
+  (JNIEnv *, jclass, jlong, jlong, jint);
+
+/*
+ * Class:     uk_ac_hud_jnvi_api_JNVIAPI
+ * Method:    cos
+ * Signature: (JJI)V
+ */
+JNIEXPORT void JNICALL Java_uk_ac_hud_jnvi_api_JNVIAPI_cos
+  (JNIEnv *, jclass, jlong, jlong, jint);
+
+/*
+ * Class:     uk_ac_hud_jnvi_api_JNVIAPI
+ * Method:    log
+ * Signature: (JJI)V
+ */
+JNIEXPORT void JNICALL Java_uk_ac_hud_jnvi_api_JNVIAPI_log
+  (JNIEnv *, jclass, jlong, jlong, jint);
+
 #ifdef __cplusplus
 }
 #endif

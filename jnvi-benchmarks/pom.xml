@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>jnvi-parent</artifactId>
+		<groupId>uk.ac.hud.jnvi</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>jnvi-benchmarks</artifactId>
+	<name>JNVI Benchmarks</name>
+	<description>Provides benchmark analysis of the JNVI Library.</description>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>exec-maven-plugin</artifactId>
+				<groupId>org.codehaus.mojo</groupId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<id>run-benchmarks</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<skip>${jnvi.benchmarks.skip}</skip>
+							<classpathScope>test</classpathScope>
+							<executable>java</executable>
+							<arguments>
+								<argument>-classpath</argument>
+								<classpath/>
+								<argument>org.openjdk.jmh.Main</argument>
+								<argument>.*</argument>
+							</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.openjdk.jmh</groupId>
+			<artifactId>jmh-core</artifactId>
+			<version>1.19</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.openjdk.jmh</groupId>
+			<artifactId>jmh-generator-annprocess</artifactId>
+			<version>1.19</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>uk.ac.hud.jnvi</groupId>
+			<artifactId>jnvi-util</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>uk.ac.hud.jnvi</groupId>
+			<artifactId>jnvi-library</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>

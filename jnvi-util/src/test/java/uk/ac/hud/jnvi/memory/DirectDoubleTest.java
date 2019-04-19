@@ -63,7 +63,5 @@ public class DirectDoubleTest {
 		assertTrue("Address should never be zero or negative.", address > 0);
 
 		directDouble.destroy();
-
-		System.out.println(directDouble);
 	}
 }

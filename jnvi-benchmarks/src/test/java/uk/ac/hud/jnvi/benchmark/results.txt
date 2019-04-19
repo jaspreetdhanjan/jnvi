@@ -1,0 +1,49 @@
+Vector length = 128
+
+Throughput:
+
+Benchmark                         Mode  Cnt         Score         Error  Units
+JNVIBenchmark.divideVectors      thrpt   20   5578233.087 ± 425320.957  ops/s
+JNVIBenchmark.multiplyVectors    thrpt   20   5337357.329 ±  21376.276  ops/s
+LinearBenchmark.divideVectors    thrpt   20  10513115.252 ±  49781.586  ops/s
+LinearBenchmark.multiplyVectors  thrpt   20  57406757.951 ± 689308.728  ops/s
+
+------------------------------------------------------------------------------
+
+Vector length = 256
+
+Throughput:
+
+Benchmark                         Mode  Cnt         Score         Error  Units
+JNVIBenchmark.divideVectors      thrpt   20   3444530.459 ±   25226.637  ops/s
+JNVIBenchmark.multiplyVectors    thrpt   20   3451862.489 ±   14156.808  ops/s
+LinearBenchmark.divideVectors    thrpt   20   5721887.062 ±   22280.254  ops/s
+LinearBenchmark.multiplyVectors  thrpt   20  35853082.827 ± 3829221.057  ops/s
+
+------------------------------------------------------------------------------
+
+Vector length = 512
+
+Throughput:
+
+Benchmark                         Mode  Cnt         Score       Error  Units
+JNVIBenchmark.divideVectors      thrpt   20   1717158.814 ± 61870.613  ops/s
+JNVIBenchmark.multiplyVectors    thrpt   20   1850293.196 ±  9484.671  ops/s
+LinearBenchmark.divideVectors    thrpt   20   2979367.536 ± 10084.086  ops/s
+LinearBenchmark.multiplyVectors  thrpt   20  16046988.229 ± 49606.679  ops/s
+
+-----------------------------------------------------------------------------
+
+Vector length = 4, no native loop unrolling.
+
+Throughput:
+
+Benchmark                         Mode  Cnt          Score         Error  Units
+JNVIBenchmark.divideVectors      thrpt   20   38808605.849 ±  177109.947  ops/s
+JNVIBenchmark.multiplyVectors    thrpt   20   37182600.411 ±   82873.930  ops/s
+JNVIBenchmark.rSqrtVectors       thrpt   20   46456567.498 ±  501021.834  ops/s
+JNVIBenchmark.sqrtVectors        thrpt   20   39749040.036 ±  112521.133  ops/s
+LinearBenchmark.divideVectors    thrpt   20  101399968.297 ±  893397.428  ops/s
+LinearBenchmark.multiplyVectors  thrpt   20  228813784.148 ± 1469171.392  ops/s
+LinearBenchmark.rSqrtVectors     thrpt   20   25421220.302 ±   79257.720  ops/s
+LinearBenchmark.sqrtVectors      thrpt   20   98426910.177 ±  853050.586  ops/s

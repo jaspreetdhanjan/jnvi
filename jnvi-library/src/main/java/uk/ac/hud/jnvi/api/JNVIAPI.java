@@ -21,35 +21,34 @@ package uk.ac.hud.jnvi.api;
 public final class JNVIAPI {
 	private static final int SUPPORT;
 	private static final int VERSION;
-
+	
 	public static final byte TYPE_DOUBLE = 0x1;
 	public static final byte TYPE_FLOAT = 0x2;
 	public static final byte TYPE_INT = 0x3;
-
+	
 	static {
-		int support = 0;
-
+		int support;
 		try {
 			support = nativeInit();
 		} catch (UnsatisfiedLinkError unsatisfiedLinkError) {
-			System.err.println("JNVI library not loaded! Use SharedLibrary.load() to load the shared libraries.");
-			unsatisfiedLinkError.printStackTrace();
+			throw new RuntimeException("JNVI library not loaded! Use SharedLibrary.load() to load the shared libraries.",
+					unsatisfiedLinkError);
 		}
-
+		
 		SUPPORT = support;
 		VERSION = getVersion0();
-
+		
 		System.out.println("JNVI Library successfully loaded! (With support for: 0b" + Integer.toBinaryString(support) + ")");
 	}
-
+	
 	private JNVIAPI() {
 		throw new RuntimeException("JNVIAPI should not be instantiated!");
 	}
-
+	
 	//----------------------
 	// API
 	// ----------------------
-
+	
 	/**
 	 * An internal API operation notifying the native library when the JNVIAPI class is statically initialised.
 	 * <p>
@@ -69,7 +68,7 @@ public final class JNVIAPI {
 	 * @since 1.0.0
 	 */
 	private static native int nativeInit();
-
+	
 	/**
 	 * Native implementation of {@link #getVersion()}
 	 *
@@ -77,7 +76,7 @@ public final class JNVIAPI {
 	 * @since 1.0.0
 	 */
 	private static native int getVersion0();
-
+	
 	/**
 	 * Allows the developer to gain insight into the shared library they have installed.
 	 *
@@ -87,7 +86,7 @@ public final class JNVIAPI {
 	public static int getVersion() {
 		return VERSION;
 	}
-
+	
 	/**
 	 * This API is specifically built for Intel's: SSE, SSE2, SSE3, SSSE3, SSE4.x, AVX and AVX2 architectures.
 	 *
@@ -97,11 +96,11 @@ public final class JNVIAPI {
 	public static boolean isSupported() {
 		return SUPPORT > 0;
 	}
-
+	
 	//----------------------
 	// Operations
 	//----------------------
-
+	
 	/**
 	 * Adds the vector data at srcA to the elements within srcB and store the results in dest.
 	 *
@@ -110,11 +109,11 @@ public final class JNVIAPI {
 	 * @param srcA the memory location of value A.
 	 * @param srcB the memory location of value B.
 	 * @param dest the memory location of the calculation result.
-	 * @param len the size of the data set. Size of srcA, srcB and dest MUST be of this length.
+	 * @param n    the number of elements. Size of srcA, srcB and dest MUST be of this length.
 	 * @since 1.0.0
 	 */
-	public static native void add(byte type, long srcA, long srcB, long dest, int len);
-
+	public static native void add(byte type, long srcA, long srcB, long dest, int n);
+	
 	/**
 	 * Subtracts the vector data at srcA from the vector data at srcB and place the result at dest.
 	 *
@@ -123,26 +122,24 @@ public final class JNVIAPI {
 	 * @param srcA the memory location of value A.
 	 * @param srcB the memory location of value B.
 	 * @param dest the memory location of the calculation result.
-	 * @param len the size of the data set. Size of srcA, srcB and dest MUST be of this length.
+	 * @param n    the number of elements. Size of srcA, srcB and dest MUST be of this length.
 	 * @since 1.0.0
 	 */
-	public static native void sub(byte type, long srcA, long srcB, long dest, int len);
-
+	public static native void sub(byte type, long srcA, long srcB, long dest, int n);
+	
 	/**
 	 * Multiplies the vector data at srcA to the vector data at srcB and place the result at dest.
-	 * <p>
-	 * It is critically important that the vector information stored at srcA, srcB and dest are of the same length.
 	 *
 	 * @param type the type of memory we are using. This MUST be the same for all sources and the dest.
 	 *             TYPE_DOUBLE, TYPE_FLOAT and TYPE_INT is supported.
 	 * @param srcA the memory location of value A.
 	 * @param srcB the memory location of value B.
 	 * @param dest the memory location of the calculation result.
-	 * @param len the size of the data set. Size of srcA, srcB and dest MUST be of this length.
+	 * @param n    the number of elements. Size of srcA, srcB and dest MUST be of this length.
 	 * @since 1.0.0
 	 */
-	public static native void mul(byte type, long srcA, long srcB, long dest, int len);
-
+	public static native void mul(byte type, long srcA, long srcB, long dest, int n);
+	
 	/**
 	 * Divides the vector data at srcA by the vector data at srcB and place the result at dest.
 	 *
@@ -151,8 +148,94 @@ public final class JNVIAPI {
 	 * @param srcA the memory location of value A (numerator).
 	 * @param srcB the memory location of value B (denominator).
 	 * @param dest the memory location of the calculation result.
-	 * @param len the size of the data set. Size of srcA, srcB and dest MUST be of this length.
+	 * @param n    the number of elements. Size of srcA, srcB and dest MUST be of this length.
 	 * @since 1.0.0
 	 */
-	public static native void div(byte type, long srcA, long srcB, long dest, int len);
+	public static native void div(byte type, long srcA, long srcB, long dest, int n);
+	
+	/**
+	 * Computes the square-root on the vector data at src and places the result at dest.
+	 *
+	 * @param type the type of memory we are using. This MUST be the same for all sources and the dest.
+	 *             TYPE_DOUBLE and TYPE_FLOAT is supported.
+	 * @param src  the memory location of value.
+	 * @param dest the memory location of the calculation result.
+	 * @param n    the number of elements.
+	 * @since 1.0.0
+	 */
+	public static native void sqrt(byte type, long src, long dest, int n);
+	
+	/**
+	 * Computes the approximate reciprocal square-root on the vector data at src and places the result at dest.
+	 *
+	 * <b>Only supports TYPE_FLOAT!</b>
+	 *
+	 * @param src  the memory location of value.
+	 * @param dest the memory location of the calculation result.
+	 * @param n    the number of elements.
+	 * @since 1.0.0
+	 */
+	public static native void rsqrt(long src, long dest, int n);
+	
+	/**
+	 * Computes the exponential value of e raised to the vector data at src and places the result at dest.
+	 *
+	 * <b>Only supports TYPE_FLOAT!</b>
+	 *
+	 * @param src  the memory location of value.
+	 * @param dest the memory location of the calculation result.
+	 * @param n    the number of elements.
+	 * @since 1.0.0
+	 */
+	public static native void exp(long src, long dest, int n);
+	
+	/**
+	 * Computes the sin function of the vector data at src and places the result at dest.
+	 *
+	 * <b>Only supports TYPE_FLOAT!</b>
+	 *
+	 * @param src  the memory location of value.
+	 * @param dest the memory location of the calculation result.
+	 * @param n    the number of elements.
+	 * @since 1.0.0
+	 */
+	public static native void sin(long src, long dest, int n);
+	
+	/**
+	 * Computes the cos function of the vector data at src and places the result at dest.
+	 *
+	 * <b>Only supports TYPE_FLOAT!</b>
+	 *
+	 * @param src  the memory location of value.
+	 * @param dest the memory location of the calculation result.
+	 * @param n    the number of elements.
+	 * @since 1.0.0
+	 */
+	public static native void cos(long src, long dest, int n);
+	
+	/**
+	 * Computes the logarithm of the vector data at src and places the result at dest.
+	 *
+	 * <b>Only supports TYPE_FLOAT!</b>
+	 *
+	 * @param src  the memory location of value.
+	 * @param dest the memory location of the calculation result.
+	 * @param n    the number of elements.
+	 * @since 1.0.0
+	 */
+	public static native void log(long src, long dest, int n);
+
+//	public static native void tan(byte type, long src, long dest, int n);
+
+//	public static native void asin(byte type, long src, long dest, int len);
+
+//	public static native void acos(byte type, long src, long dest, int len);
+
+//	public static native void atan(byte type, long src, long dest, int len);
+
+//	public static native void sinh(byte type, long src, long dest, int len);
+
+//	public static native void cosh(byte type, long src, long dest, int len);
+
+//	public static native void tanh(byte type, long src, long dest, int len);
 }

@@ -20,8 +20,8 @@ public class SharedLibrary {
 	}
 
 	public static final String JNVI_LIBRARY_DIRECTORY_PROPERTY = "jnvi.library.dir";
-
-	private static final String LIBRARY_DEFAULT_DIRECTORY = "target/";
+	
+	private static final String LIBRARY_DEFAULT_DIRECTORY = "src/main/resources/natives/";
 	private static final String LIBRARY_NAME = "jnvi-lib";
 
 	private static final OSType OS = getOS();
