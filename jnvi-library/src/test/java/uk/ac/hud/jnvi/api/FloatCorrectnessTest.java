@@ -8,17 +8,13 @@ import java.util.Random;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 
-public class FloatCorrectnessTest implements CorrectnessTest {
+public class FloatCorrectnessTest implements CorrectnessTest, TestRequirement {
 	private final ErrorCollector collector;
 	private final Random random;
 	
 	public FloatCorrectnessTest(ErrorCollector collector, Random random) {
 		this.collector = collector;
 		this.random = random;
-	}
-	
-	private int getVectorSize() {
-		return 8;
 	}
 	
 	@Override
@@ -113,7 +109,56 @@ public class FloatCorrectnessTest implements CorrectnessTest {
 		resultVector.destroy();
 	}
 	
-	//	@Override
+	@Override
+	public void testDotCorrectness() {
+		float[] vectorData0 = TestUtils.getRandomFloatArray(random, getVectorSize());
+		float[] vectorData1 = TestUtils.getRandomFloatArray(random, getVectorSize());
+		
+		DirectFloat vector0 = DirectFloat.allocateDirect(vectorData0);
+		DirectFloat vector1 = DirectFloat.allocateDirect(vectorData1);
+		
+		DirectFloat result = new DirectFloat(1);
+		
+		JNVIAPI.dot(JNVIAPI.TYPE_FLOAT, vector0.getAddress(), vector1.getAddress(), result.getAddress(), getVectorSize());
+		
+		float dot = 0;
+		for (int i = 0; i < getVectorSize(); i++) {
+			dot += (vectorData0[i] * vectorData1[i]);
+		}
+		
+		collector.checkThat("Dot product values should match.", result.get(0), equalTo(dot));
+		
+		vector0.destroy();
+		vector1.destroy();
+		result.destroy();
+	}
+	
+	@Override
+	public void testSumCorrectness() {
+		float[] data = TestUtils.getRandomFloatArray(random, getVectorSize());
+		
+		DirectFloat vector = DirectFloat.allocateDirect(data);
+		DirectFloat result = new DirectFloat(1);
+		
+		JNVIAPI.sum(JNVIAPI.TYPE_FLOAT, vector.getAddress(), result.getAddress(), getVectorSize());
+		
+		float sum = 0;
+		for (int i = 0; i < getVectorSize(); i++) {
+			sum += data[i];
+		}
+		
+		collector.checkThat("Sum value should match.", result.get(0), equalTo(sum));
+		
+		vector.destroy();
+		result.destroy();
+	}
+	
+	@Override
+	public void testFurtherTypeSpecificCorrectness() {
+		testSqrtCorrectness();
+		testRsqrtCorrectness();
+	}
+	
 	public void testSqrtCorrectness() {
 		float[] vectorData = TestUtils.getRandomFloatArray(random, getVectorSize());
 		
@@ -132,8 +177,7 @@ public class FloatCorrectnessTest implements CorrectnessTest {
 		resultVector.destroy();
 	}
 	
-	//	@Override
-	public void testReciprocalSqrtCorrectness() {
+	private void testRsqrtCorrectness() {
 		float[] vectorData = TestUtils.getRandomFloatArray(random, getVectorSize());
 		
 		DirectFloat vector = DirectFloat.allocateDirect(vectorData);
@@ -144,6 +188,7 @@ public class FloatCorrectnessTest implements CorrectnessTest {
 		for (int i = 0; i < getVectorSize(); i++) {
 			final float actual = (float) (1.0 / Math.sqrt(vectorData[i]));
 			
+			// Will fail, due to approx.
 			collector.checkThat("sqrt(" + vectorData[i] + ") calculation should be correct.", resultVector.get(i), equalTo(actual));
 		}
 		

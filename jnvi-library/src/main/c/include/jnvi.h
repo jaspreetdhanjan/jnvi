@@ -22,7 +22,6 @@ typedef float fvec;
 typedef int ivec;
 
 unsigned int jnvi_is_supported();
-//unsigned int jnvi_get_block(int);
 
 // Operations
 
@@ -42,19 +41,17 @@ void jnvi_div_d(const dvec*, const dvec*, dvec*, const int);
 void jnvi_div_f(const fvec*, const fvec*, fvec*, const int);
 void jnvi_div_i(const ivec*, const ivec*, ivec*, const int);
 
+void jnvi_dot_d(const dvec*, const dvec*, dvec*, const int);
+void jnvi_dot_f(const fvec*, const fvec*, fvec*, const int);
+void jnvi_dot_i(const ivec*, const ivec*, ivec*, const int);
+
+void jnvi_sum_d(const dvec*, dvec*, const int);
+void jnvi_sum_f(const fvec*, fvec*, const int);
+void jnvi_sum_i(const ivec*, ivec*, const int);
+
 void jnvi_sqrt_d(const dvec*, dvec*, const int);
 void jnvi_sqrt_f(const fvec*, fvec*, const int);
 
 void jnvi_rsqrt_f(const fvec*, fvec*, const int);
-
-void jnvi_sin_f(const fvec*, fvec*, const int);
-
-void jnvi_cos_f(const fvec*, fvec*, const int);
-
-//void jnvi_sincos_f(const fvec*, fvec*, const int);
-
-void jnvi_exp_f(const fvec*, fvec*, const int);
-
-void jnvi_log_f(const fvec*, fvec*, const int);
 
 #endif

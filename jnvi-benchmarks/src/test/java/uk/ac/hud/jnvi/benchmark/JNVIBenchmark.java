@@ -6,7 +6,7 @@ import uk.ac.hud.jnvi.api.JNVIAPI;
 import uk.ac.hud.jnvi.memory.DirectFloat;
 
 @State(Scope.Benchmark)
-public class JNVIBenchmark implements BenchmarkRequirement {
+public class JNVIBenchmark implements BenchmarkRequirement, BenchmarkOperation {
 	private DirectFloat vectorA;
 	private DirectFloat vectorB;
 	private DirectFloat result;
@@ -37,30 +37,58 @@ public class JNVIBenchmark implements BenchmarkRequirement {
 	}
 	
 	@Benchmark
-	@Fork(value = 1, warmups = 0)
+	@Fork(value = 10, warmups = 10)
+	@BenchmarkMode(Mode.Throughput)
+	public void addVectors() {
+		JNVIAPI.add(JNVIAPI.TYPE_FLOAT, addressVectorA, addressVectorB, addressResult, getVectorLength());
+	}
+	
+	@Benchmark
+	@Fork(value = 10, warmups = 10)
+	@BenchmarkMode(Mode.Throughput)
+	public void subtractVectors() {
+		JNVIAPI.sub(JNVIAPI.TYPE_FLOAT, addressVectorA, addressVectorB, addressResult, getVectorLength());
+	}
+	
+	@Benchmark
+	@Fork(value = 10, warmups = 10)
 	@BenchmarkMode(Mode.Throughput)
 	public void multiplyVectors() {
 		JNVIAPI.mul(JNVIAPI.TYPE_FLOAT, addressVectorA, addressVectorB, addressResult, getVectorLength());
 	}
 	
 	@Benchmark
-	@Fork(value = 1, warmups = 0)
+	@Fork(value = 10, warmups = 10)
 	@BenchmarkMode(Mode.Throughput)
 	public void divideVectors() {
 		JNVIAPI.div(JNVIAPI.TYPE_FLOAT, addressVectorA, addressVectorB, addressResult, getVectorLength());
 	}
 	
 	@Benchmark
-	@Fork(value = 1, warmups = 0)
+	@Fork(value = 10, warmups = 10)
 	@BenchmarkMode(Mode.Throughput)
-	public void rSqrtVectors() {
-		JNVIAPI.rsqrt(addressVectorA, addressResult, getVectorLength());
+	public void vectorSum() {
+		JNVIAPI.sum(JNVIAPI.TYPE_FLOAT, addressVectorA, addressResult, getVectorLength());
 	}
 	
 	@Benchmark
-	@Fork(value = 1, warmups = 0)
+	@Fork(value = 10, warmups = 10)
+	@BenchmarkMode(Mode.Throughput)
+	public void vectorDot() {
+		JNVIAPI.div(JNVIAPI.TYPE_FLOAT, addressVectorA, addressVectorB, addressResult, getVectorLength());
+	}
+	
+	@Benchmark
+	@Fork(value = 10, warmups = 10)
+	@BenchmarkMode(Mode.Throughput)
+	public void rSqrtVectors() {
+		JNVIAPI.rsqrt(addressVectorA, addressResult, 4);
+	}
+	
+	@Benchmark
+	@Fork(value = 10, warmups = 10)
 	@BenchmarkMode(Mode.Throughput)
 	public void sqrtVectors() {
-		JNVIAPI.sqrt(JNVIAPI.TYPE_FLOAT, addressVectorB, addressResult, getVectorLength());
+		JNVIAPI.sqrt(JNVIAPI.TYPE_FLOAT, addressVectorB, addressResult, 4);
 	}
 }

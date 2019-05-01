@@ -6,7 +6,7 @@ public interface BenchmarkRequirement {
 	Random RANDOM = new Random();
 	
 	default int getVectorLength() {
-		return 256;
+		return 4;
 	}
 	
 	default float[] getRandomFloatArray() {
@@ -22,10 +22,4 @@ public interface BenchmarkRequirement {
 	void setup();
 	
 	void tearDown();
-	
-	// Tests
-
-//	void multiplyVectors();
-
-//	void divideVectors();
 }

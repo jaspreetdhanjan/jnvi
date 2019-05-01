@@ -16,7 +16,7 @@ ifeq ($(TARGET), darwin64)
 	LIB_NAME=jnvi-lib.jnilib
 endif
 
-CFLAGS+= -msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mavx -mavx2 -mfma
+CFLAGS+=-msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mavx -mavx2 -mfma
 CFLAGS+=-O3
 #CFLAGS+=-funroll-loops
 #CFLAGS+=-W

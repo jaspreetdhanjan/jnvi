@@ -154,7 +154,34 @@ public final class JNVIAPI {
 	public static native void div(byte type, long srcA, long srcB, long dest, int n);
 	
 	/**
-	 * Computes the square-root on the vector data at src and places the result at dest.
+	 * Computes a vectorised dot (or scalar) product of the vector data at srcA and srcB and places the result
+	 * at dest.
+	 *
+	 * @param type the type of memory we are using. This MUST be the same for all sources and the dest.
+	 *             TYPE_DOUBLE, TYPE_FLOAT and TYPE_INT is supported.
+	 * @param srcA the memory location of value A (numerator).
+	 * @param srcB the memory location of value B (denominator).
+	 * @param dest the memory location of the calculation result.
+	 * @param n    the number of elements. Size of srcA and srcB MUST be of this length.
+	 * @since 1.0.0
+	 */
+	public static native void dot(byte type, long srcA, long srcB, long dest, int n);
+	
+	/**
+	 * Computes a vectorised horizontal sum of all values at src and places the result at dest.
+	 * <b>dest should be a singular value for the result.</b>
+	 *
+	 * @param type the type of memory we are using. This MUST be the same for all sources and the dest.
+	 *             TYPE_DOUBLE and TYPE_FLOAT is supported.
+	 * @param src  the memory location of value.
+	 * @param dest the memory location of the calculation result.
+	 * @param n    the number of elements.
+	 * @since 1.0.0
+	 */
+	public static native void sum(byte type, long src, long dest, int n);
+	
+	/**
+	 * Computes the square-root on the vector data, in parallel, at src and places the result at dest.
 	 *
 	 * @param type the type of memory we are using. This MUST be the same for all sources and the dest.
 	 *             TYPE_DOUBLE and TYPE_FLOAT is supported.
@@ -176,66 +203,4 @@ public final class JNVIAPI {
 	 * @since 1.0.0
 	 */
 	public static native void rsqrt(long src, long dest, int n);
-	
-	/**
-	 * Computes the exponential value of e raised to the vector data at src and places the result at dest.
-	 *
-	 * <b>Only supports TYPE_FLOAT!</b>
-	 *
-	 * @param src  the memory location of value.
-	 * @param dest the memory location of the calculation result.
-	 * @param n    the number of elements.
-	 * @since 1.0.0
-	 */
-	public static native void exp(long src, long dest, int n);
-	
-	/**
-	 * Computes the sin function of the vector data at src and places the result at dest.
-	 *
-	 * <b>Only supports TYPE_FLOAT!</b>
-	 *
-	 * @param src  the memory location of value.
-	 * @param dest the memory location of the calculation result.
-	 * @param n    the number of elements.
-	 * @since 1.0.0
-	 */
-	public static native void sin(long src, long dest, int n);
-	
-	/**
-	 * Computes the cos function of the vector data at src and places the result at dest.
-	 *
-	 * <b>Only supports TYPE_FLOAT!</b>
-	 *
-	 * @param src  the memory location of value.
-	 * @param dest the memory location of the calculation result.
-	 * @param n    the number of elements.
-	 * @since 1.0.0
-	 */
-	public static native void cos(long src, long dest, int n);
-	
-	/**
-	 * Computes the logarithm of the vector data at src and places the result at dest.
-	 *
-	 * <b>Only supports TYPE_FLOAT!</b>
-	 *
-	 * @param src  the memory location of value.
-	 * @param dest the memory location of the calculation result.
-	 * @param n    the number of elements.
-	 * @since 1.0.0
-	 */
-	public static native void log(long src, long dest, int n);
-
-//	public static native void tan(byte type, long src, long dest, int n);
-
-//	public static native void asin(byte type, long src, long dest, int len);
-
-//	public static native void acos(byte type, long src, long dest, int len);
-
-//	public static native void atan(byte type, long src, long dest, int len);
-
-//	public static native void sinh(byte type, long src, long dest, int len);
-
-//	public static native void cosh(byte type, long src, long dest, int len);
-
-//	public static native void tanh(byte type, long src, long dest, int len);
 }

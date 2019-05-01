@@ -1,49 +1,135 @@
-Vector length = 128
+Size = 4
 
-Throughput:
+Benchmark                         Mode  Cnt          Score          Error  Units
 
-Benchmark                         Mode  Cnt         Score         Error  Units
-JNVIBenchmark.divideVectors      thrpt   20   5578233.087 ± 425320.957  ops/s
-JNVIBenchmark.multiplyVectors    thrpt   20   5337357.329 ±  21376.276  ops/s
-LinearBenchmark.divideVectors    thrpt   20  10513115.252 ±  49781.586  ops/s
-LinearBenchmark.multiplyVectors  thrpt   20  57406757.951 ± 689308.728  ops/s
+JNVIBenchmark.rSqrtVectors       thrpt   20   73308593.870 ±  325974.233  ops/s
+JNVIBenchmark.sqrtVectors        thrpt   20   68291298.871 ±  194892.004  ops/s
+LinearBenchmark.rSqrtVectors     thrpt   20   25532838.073 ±  132124.487  ops/s
+LinearBenchmark.sqrtVectors      thrpt   20   99211666.135 ±  417421.317  ops/s
 
-------------------------------------------------------------------------------
+JNVIBenchmark.addVectors         thrpt   20   55050857.496 ±  333801.197  ops/s
+JNVIBenchmark.divideVectors      thrpt   20   54891851.677 ±  434037.251  ops/s
+JNVIBenchmark.multiplyVectors    thrpt   20   55098534.859 ±  201268.593  ops/s
+JNVIBenchmark.subtractVectors    thrpt   20   55029043.633 ±  288729.697  ops/s
+JNVIBenchmark.vectorDot          thrpt   20   54874041.506 ±  290229.727  ops/s
+JNVIBenchmark.vectorSum          thrpt   20   62288170.699 ±  162669.725  ops/s
 
-Vector length = 256
+LinearBenchmark.addVectors       thrpt   20  232908381.059 ± 1166223.917  ops/s
+LinearBenchmark.divideVectors    thrpt   20  102625938.348 ±  388292.061  ops/s
+LinearBenchmark.multiplyVectors  thrpt   20  230023040.969 ±  981797.660  ops/s
+LinearBenchmark.subtractVectors  thrpt   20  227007148.966 ±  990825.045  ops/s
+LinearBenchmark.vectorDot        thrpt   20  167102764.009 ±  740381.873  ops/s
+LinearBenchmark.vectorSum        thrpt   20   79814895.051 ±  369400.568  ops/s
 
-Throughput:
+-------------------------------------------------------------------------------
 
-Benchmark                         Mode  Cnt         Score         Error  Units
-JNVIBenchmark.divideVectors      thrpt   20   3444530.459 ±   25226.637  ops/s
-JNVIBenchmark.multiplyVectors    thrpt   20   3451862.489 ±   14156.808  ops/s
-LinearBenchmark.divideVectors    thrpt   20   5721887.062 ±   22280.254  ops/s
-LinearBenchmark.multiplyVectors  thrpt   20  35853082.827 ± 3829221.057  ops/s
+Size = 8
 
-------------------------------------------------------------------------------
+JNVIBenchmark.addVectors         thrpt   20   46868014.547 ±  2007808.299  ops/s
+JNVIBenchmark.divideVectors      thrpt   20   43731315.444 ±  4342130.102  ops/s
+JNVIBenchmark.multiplyVectors    thrpt   20   43942376.105 ± 10942988.309  ops/s
+JNVIBenchmark.subtractVectors    thrpt   20   50978542.004 ±   171400.722  ops/s
+JNVIBenchmark.vectorDot          thrpt   20   46191678.806 ±    89428.560  ops/s
+JNVIBenchmark.vectorSum          thrpt   20   57275359.972 ±   113249.415  ops/s
 
-Vector length = 512
+LinearBenchmark.addVectors       thrpt   20  130272790.551 ±   359395.987  ops/s
+LinearBenchmark.divideVectors    thrpt   20   50179037.545 ±   257091.108  ops/s
+LinearBenchmark.multiplyVectors  thrpt   20  129260494.203 ±   323910.595  ops/s
+LinearBenchmark.subtractVectors  thrpt   20  130145571.057 ±   642551.290  ops/s
+LinearBenchmark.vectorDot        thrpt   20  123517455.040 ±   501844.605  ops/s
+LinearBenchmark.vectorSum        thrpt   20   28530901.742 ±   504241.002  ops/s
 
-Throughput:
+-------------------------------------------------------------------------------
 
-Benchmark                         Mode  Cnt         Score       Error  Units
-JNVIBenchmark.divideVectors      thrpt   20   1717158.814 ± 61870.613  ops/s
-JNVIBenchmark.multiplyVectors    thrpt   20   1850293.196 ±  9484.671  ops/s
-LinearBenchmark.divideVectors    thrpt   20   2979367.536 ± 10084.086  ops/s
-LinearBenchmark.multiplyVectors  thrpt   20  16046988.229 ± 49606.679  ops/s
+Size = 16
 
------------------------------------------------------------------------------
+JNVIBenchmark.addVectors         thrpt   20   43777152.315 ±  824003.997  ops/s
+JNVIBenchmark.divideVectors      thrpt   20   24756777.230 ±  871444.137  ops/s
+JNVIBenchmark.multiplyVectors    thrpt   20   43910147.605 ±  905926.337  ops/s
+JNVIBenchmark.subtractVectors    thrpt   20   43701327.499 ±  437744.580  ops/s
+JNVIBenchmark.vectorDot          thrpt   20   25093498.031 ±  440732.812  ops/s
+JNVIBenchmark.vectorSum          thrpt   20   48637267.885 ±  551057.389  ops/s
 
-Vector length = 4, no native loop unrolling.
+LinearBenchmark.addVectors       thrpt   20   92599067.541 ±  709001.863  ops/s
+LinearBenchmark.divideVectors    thrpt   20   24271936.397 ±  123064.196  ops/s
+LinearBenchmark.multiplyVectors  thrpt   20   92087940.857 ± 1186450.323  ops/s
+LinearBenchmark.subtractVectors  thrpt   20   85056485.787 ± 9700463.914  ops/s
+LinearBenchmark.vectorDot        thrpt   20  117908167.544 ± 1945840.942  ops/s
+LinearBenchmark.vectorSum        thrpt   20   14735250.407 ± 1437344.052  ops/s
 
-Throughput:
+-------------------------------------------------------------------------------
 
-Benchmark                         Mode  Cnt          Score         Error  Units
-JNVIBenchmark.divideVectors      thrpt   20   38808605.849 ±  177109.947  ops/s
-JNVIBenchmark.multiplyVectors    thrpt   20   37182600.411 ±   82873.930  ops/s
-JNVIBenchmark.rSqrtVectors       thrpt   20   46456567.498 ±  501021.834  ops/s
-JNVIBenchmark.sqrtVectors        thrpt   20   39749040.036 ±  112521.133  ops/s
-LinearBenchmark.divideVectors    thrpt   20  101399968.297 ±  893397.428  ops/s
-LinearBenchmark.multiplyVectors  thrpt   20  228813784.148 ± 1469171.392  ops/s
-LinearBenchmark.rSqrtVectors     thrpt   20   25421220.302 ±   79257.720  ops/s
-LinearBenchmark.sqrtVectors      thrpt   20   98426910.177 ±  853050.586  ops/s
+Size = 32
+
+JNVIBenchmark.addVectors         thrpt   20  44190954.831 ± 1347075.110  ops/s
+JNVIBenchmark.divideVectors      thrpt   20  43160352.788 ± 3594630.486  ops/s
+JNVIBenchmark.multiplyVectors    thrpt   20  45579749.891 ± 2596705.259  ops/s
+JNVIBenchmark.subtractVectors    thrpt   20  46810444.413 ±  943244.341  ops/s
+JNVIBenchmark.vectorDot          thrpt   20  41794634.184 ± 1143011.702  ops/s
+JNVIBenchmark.vectorSum          thrpt   20  25979621.757 ± 1533219.039  ops/s
+
+LinearBenchmark.addVectors       thrpt   20  90481320.640 ± 6985664.899  ops/s
+LinearBenchmark.divideVectors    thrpt   20  27702756.548 ±  593072.569  ops/s
+LinearBenchmark.multiplyVectors  thrpt   20  80961443.372 ± 7797002.675  ops/s
+LinearBenchmark.subtractVectors  thrpt   20  84848915.785 ± 2462508.198  ops/s
+LinearBenchmark.vectorDot        thrpt   20  68578352.799 ± 3972898.780  ops/s
+LinearBenchmark.vectorSum        thrpt   20   7159413.121 ±  174574.474  ops/s
+
+-------------------------------------------------------------------------------
+
+Size = 64
+
+JNVIBenchmark.addVectors         thrpt   20  23913261.947 ±  910743.546  ops/s
+JNVIBenchmark.divideVectors      thrpt   20  21589258.044 ± 1547280.806  ops/s
+JNVIBenchmark.multiplyVectors    thrpt   20  37399396.921 ± 1259539.654  ops/s
+JNVIBenchmark.subtractVectors    thrpt   20  36919618.495 ± 1775501.502  ops/s
+JNVIBenchmark.vectorDot          thrpt   20  20015733.059 ±  998932.751  ops/s
+JNVIBenchmark.vectorSum          thrpt   20  12824722.268 ±  729122.288  ops/s
+
+LinearBenchmark.addVectors       thrpt   20  67272198.958 ± 3054225.788  ops/s
+LinearBenchmark.divideVectors    thrpt   20  17309760.060 ±  202911.003  ops/s
+LinearBenchmark.multiplyVectors  thrpt   20  64371802.115 ± 2908779.152  ops/s
+LinearBenchmark.subtractVectors  thrpt   20  68490105.803 ± 2709743.471  ops/s
+LinearBenchmark.vectorDot        thrpt   20  54384537.627 ± 2063238.903  ops/s
+LinearBenchmark.vectorSum        thrpt   20   3138015.483 ±  108215.373  ops/s
+
+-------------------------------------------------------------------------------
+
+Size = 128
+
+JNVIBenchmark.addVectors         thrpt   20  32383436.583 ±  794272.690  ops/s
+JNVIBenchmark.divideVectors      thrpt   20  11961945.659 ±  276777.270  ops/s
+JNVIBenchmark.multiplyVectors    thrpt   20  21724538.459 ±  502865.185  ops/s
+JNVIBenchmark.subtractVectors    thrpt   20  32184111.559 ±  710627.912  ops/s
+JNVIBenchmark.vectorDot          thrpt   20  11629851.220 ±  541373.107  ops/s
+JNVIBenchmark.vectorSum          thrpt   20   7179316.344 ±   90833.343  ops/s
+
+LinearBenchmark.addVectors       thrpt   20  55435433.274 ± 1317951.927  ops/s
+LinearBenchmark.divideVectors    thrpt   20  10443427.805 ±   87083.802  ops/s
+LinearBenchmark.multiplyVectors  thrpt   20  57966694.041 ±  251202.848  ops/s
+LinearBenchmark.subtractVectors  thrpt   20  58113460.796 ±  106767.107  ops/s
+LinearBenchmark.vectorDot        thrpt   20  45014693.699 ±  218106.674  ops/s
+LinearBenchmark.vectorSum        thrpt   20   1791164.074 ±   26661.987  ops/s
+
+-------------------------------------------------------------------------------
+
+Size = 256
+
+JNVIBenchmark.addVectors         thrpt   20  28451703.071 ± 1978200.045  ops/s
+JNVIBenchmark.divideVectors      thrpt   20   6193770.822 ±   61096.964  ops/s
+JNVIBenchmark.multiplyVectors    thrpt   20  29340470.135 ±  422217.298  ops/s
+JNVIBenchmark.subtractVectors    thrpt   20  29792880.104 ±  739715.333  ops/s
+JNVIBenchmark.vectorDot          thrpt   20   6131928.568 ±   98895.109  ops/s
+JNVIBenchmark.vectorSum          thrpt   20   3501477.411 ±   82749.719  ops/s
+
+LinearBenchmark.addVectors       thrpt   20  25587433.612 ±  443627.230  ops/s
+LinearBenchmark.divideVectors    thrpt   20   5575418.066 ±   51499.663  ops/s
+LinearBenchmark.multiplyVectors  thrpt   20  35853556.514 ± 1287380.882  ops/s
+LinearBenchmark.subtractVectors  thrpt   20  23867972.193 ± 2011896.105  ops/s
+LinearBenchmark.vectorDot        thrpt   20  28512777.464 ±  477807.417  ops/s
+LinearBenchmark.vectorSum        thrpt   20    889999.223 ±    6613.320  ops/s
+
+-------------------------------------------------------------------------------
+
+Size = 512
+

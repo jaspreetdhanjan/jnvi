@@ -20,56 +20,71 @@ import static org.junit.Assert.assertTrue;
 public class JNVIAPITest implements CorrectnessTest {
 	@Rule
 	public ErrorCollector collector = new ErrorCollector();
-
+	
 	private Random random = new Random();
-
+	
 	private Collection<CorrectnessTest> correctnessTests = Arrays.asList(
-//			new DoubleCorrectnessTest(collector, random),
-			new FloatCorrectnessTest(collector, random)
-//			new IntCorrectnessTest(collector, random)
+			new DoubleCorrectnessTest(collector, random),
+			new FloatCorrectnessTest(collector, random),
+			new IntCorrectnessTest(collector, random)
 	);
-
+	
 	@BeforeClass
 	public static void beforeClass() {
 		SharedLibrary.load();
 	}
-
+	
 	@Test
 	public void testApiVersion() {
 		final int version = JNVIAPI.getVersion();
-
+		
 		assertEquals("Version should be 1", version, 1);
 	}
-
+	
 	@Test
 	public void testIsSupported() {
 		final boolean supportExists = JNVIAPI.isSupported();
-
+		
 		assertTrue("Should be supported to run these tests.", supportExists);
 	}
-
+	
 	@Test
 	public void testAddCorrectness() {
 		correctnessTests.forEach(CorrectnessTest::testAddCorrectness);
 	}
-
+	
 	@Test
 	public void testSubCorrectness() {
 		correctnessTests.forEach(CorrectnessTest::testSubCorrectness);
 	}
-
+	
 	@Test
 	public void testMulCorrectness() {
 		correctnessTests.forEach(CorrectnessTest::testMulCorrectness);
 	}
-
+	
 	@Test
 	public void testDivCorrectness() {
 		correctnessTests.forEach(CorrectnessTest::testDivCorrectness);
 	}
-
+	
+	@Test
+	public void testDotCorrectness() {
+		correctnessTests.forEach(CorrectnessTest::testDotCorrectness);
+	}
+	
+	@Test
+	public void testSumCorrectness() {
+		correctnessTests.forEach(CorrectnessTest::testSumCorrectness);
+	}
+	
+	//	@Test
+	public void testOther() {
+		correctnessTests.forEach(CorrectnessTest::testFurtherTypeSpecificCorrectness);
+	}
+	
 	@Test(expected = IllegalArgumentException.class)
 	public void testException() {
-		JNVIAPI.add((byte) 4, 2552, 2524, 6553, 5);
+		JNVIAPI.add((byte) 5, 0, 0, 0, 0);
 	}
 }
